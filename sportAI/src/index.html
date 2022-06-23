@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Description" content="Code pour le Projet de INF8808.">
+        <title>Projet | INF8808</title>
+
+        <link rel="stylesheet" href="assets/typography.css">
+        <link rel="stylesheet" href="assets/style.css">
+
+      </head>
+
+      <body>
+        <main>
+          <!-- Tab links -->
+          <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'tab1')" id = "defaultOpen" >vue d'ensemble des jeux</button>
+            <button class="tablinks" onclick="openCity(event, 'tab2')">evaluation des tirs</button>
+            <button class="tablinks" onclick="openCity(event, 'tab3')">  Aspects disciplinaire</button>
+          </div>
+
+          <!-- Tab content -->
+          <div id="tab1" class="tabcontent">
+            <h3>Tab  1</h3>
+            <p>Tab 1 is the ........</p>
+            <div class="viz-container">
+              <div class="graph" id="map11">
+                <svg class="main-svg1"></svg>
+              </div>
+              <div class="graph" id="map12">
+                <svg class="main-svg2"></svg>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab2" class="tabcontent">
+            <h3>Tab 2</h3>
+            <p>tab 2 is the .......</p>
+            <div class="viz-container">
+              <div class="graph" id="map2">
+                <svg class="main-svg"></svg>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab3" class="tabcontent">
+            <h3>Tab 3</h3>
+            <p>Tab 3 is the .......</p>
+            <div class="viz-container">
+              <div class="graph" id="map3">
+                <svg class="main-svg"></svg>
+              </div>
+            </div>
+          </div>
+
+        </main>
+        <script src="https://d3js.org/d3.v5.js"></script>
+        <script type="module" src="index.js"></script>
+        <script>
+          function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+          }
+        </script>
+      </body>
+</html>
+
+

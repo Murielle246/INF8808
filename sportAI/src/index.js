@@ -23,15 +23,15 @@ import * as tooltip from './scripts/tooltip.js'
 
   const margin = { top: 80, right: 0, bottom: 55, left: 230 }
   const barColors2 = ['#0000FF','#EE82EE']
-  const barColors1 = ['#0000FF','#EE82EE', '#AA82EE']
+  const barColors1 = ['#0000FF','#EA82EE', '#AA82EE']
   const Attributs2 = ['SoT', 'Gls']
-  const Attributs1 = ['Killian', 'Kharim', 'Sadio']
+  const Attributs1 = ['Mbappe', 'Benzema', 'Mane']
 
   const xScale = d3.scaleBand().padding(0.15)
-  const xScale1 = d3.scaleBand().padding(0.15)
+  const xScale1 = d3.scaleBand().padding(0.20)
 
   const xSubgroupScale = d3.scaleBand().padding([0.015])
-  const xSubgroupScale1 = d3.scaleBand().padding([0.015])
+  const xSubgroupScale1 = d3.scaleBand().padding([0.020])
 
   const yScale21 = d3.scaleLinear()
   const yScale22 = d3.scaleLinear()
@@ -90,8 +90,7 @@ import * as tooltip from './scripts/tooltip.js'
       const color2 = helper.defineColorScale(barColors2,Attributs2)
       const color1 = helper.defineColorScale(barColors1,Attributs1)
 
-      legend.draw(Attributs2, color2)
-      legend.draw(Attributs1, color1)  /// revoir
+      legend.draw(Attributs2,Attributs1, color2, color1)
 
       viz.updateGroupXScale(xScale, xScale1, data, dataG1, svgSize.width - margin.left - margin.bottom)
       helper.updateXSubgroupScale(xSubgroupScale, xSubgroupScale1, Attributs2, Attributs1, xScale, xScale1)

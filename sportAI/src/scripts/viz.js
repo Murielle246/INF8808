@@ -207,14 +207,16 @@ export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, 
     .attr('class', 'attribut_month')
     .attr('transform', (value) => `translate(${x(+value.Months)}, 0)`)
 
-dataG1
-    d3.selectAll('.group')
-    .selectAll('.cat')
+    console.log(data)
+  d3.selectAll('.group1')
+    .selectAll('.Cat')
     .data(dataG1)
     .enter()
     .append('g')
     .attr('class', 'attribut_cat')
     .attr('transform', (value) => `translate(${x1(+value.Cat)}, 0)`)
+
+  console.log(dataG1)
 
 }
 

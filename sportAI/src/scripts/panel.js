@@ -5,7 +5,7 @@
  * @param {*} color The color scale used to select the title's color
  */
 export function display (d, color) {
-  const panel = d3.select('#panel').style('visibility', 'visible')
+  const panel = d3.select('#panel1').style('visibility', 'visible')
 
   panel.selectAll('*').remove()
 

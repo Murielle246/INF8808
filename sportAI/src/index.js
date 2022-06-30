@@ -73,9 +73,12 @@ import * as tooltip from './scripts/tooltip.js'
     d3.csv('./data.csv').then(function (datas) {
 
       const data = preprocess.summarizeLines(datas)
-      const dataG1 = preprocess.summarizeLinesG1(datas)
+      const dataG11 = preprocess.summarizeLinesG11(datas)
+      const dataG12 = preprocess.summarizeLinesG12(datas)
+      const dataG13 = preprocess.summarizeLinesG13(datas)
 
-      console.log(dataG1)
+
+      console.log(dataG11)
       console.log(data)
 
       const graph2 = helper.generateG2(svgSize.width, svgSize.height, margin)
@@ -92,16 +95,17 @@ import * as tooltip from './scripts/tooltip.js'
 
       legend.draw(Attributs2,Attributs1, color2, color1)
 
-      viz.updateGroupXScale(xScale, xScale1, data, dataG1, svgSize.width - margin.left - margin.bottom)
+      viz.updateGroupXScale(xScale, xScale1, data, dataG11, dataG12, dataG13, svgSize.width - margin.left - margin.bottom)
+
       helper.updateXSubgroupScale(xSubgroupScale, xSubgroupScale1, Attributs2, Attributs1, xScale, xScale1)
-      viz.updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG1, svgSize.height - margin.top - margin.bottom)
+      viz.updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG11, dataG12, dataG13, svgSize.height - margin.top - margin.bottom)
 
       helper.drawXAxis(xScale, xScale1, svgSize.height - margin.top - margin.bottom)
       helper.drawYAxis(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13)
 
 
 
-      viz.createGroups(data, dataG1, xScale, xScale1)
+      viz.createGroups(data, dataG11, dataG12, dataG13, xScale, xScale1)
       viz.drawBars(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, xSubgroupScale, xSubgroupScale1, Attributs2, svgSize.height - margin.top - margin.bottom, color2, color1, tip1, tip2, tip3, tip4)
     })
   }

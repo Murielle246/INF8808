@@ -178,10 +178,13 @@ export function mapMarkers (data, color, panel) {
  * @param {object[]} data The data to be used
  * @param {number} width The width of the graph
  */
- export function updateGroupXScale (scale, scale1, data, dataG1, width) {
+ export function updateGroupXScale (scale, scale1, data, dataG11, dataG12, dataG13, width) {
   // Setting the domain and range of x scale
   scale.domain(data.map((elt) => elt.Months)).range([0, width])
-  scale1.domain(dataG1.map((elt) => elt.Cat)).range([0, width])
+  scale1.domain(dataG11.map((elt) => elt.Cat)).range([0, width])
+  scale1.domain(dataG12.map((elt) => elt.Cat)).range([0, width])
+  scale1.domain(dataG13.map((elt) => elt.Cat)).range([0, width])
+
 }
 
 /**
@@ -191,7 +194,7 @@ export function mapMarkers (data, color, panel) {
  * @param {object[]} data The data to be used
  * @param {number} height The height of the graph
  */
-export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG1,  height) {  // a revoir
+export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG11, dataG12, dataG13,  height) {  // a revoir
   //TODO : Set the domain and range of the graph's y scale
   let Ymax21 = 0
   let Ymax22 = 0
@@ -209,9 +212,21 @@ export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, 
     });
   })
 
-  dataG1.forEach(elt => {
+  dataG11.forEach(elt => {
     elt.Players.forEach(row => {
       if(row.Count > Ymax11) Ymax11 = row.Count
+    });
+  })
+
+  dataG12.forEach(elt => {
+    elt.Players.forEach(row => {
+      if(row.Count > Ymax12) Ymax12 = row.Count
+    });
+  })
+
+  dataG13.forEach(elt => {
+    elt.Players.forEach(row => {
+      if(row.Count > Ymax13) Ymax13 = row.Count
     });
   })
 
@@ -220,8 +235,8 @@ export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, 
   yScale23.domain([0, Ymax23 + 5]).range([height, 0]);
 
   yScale11.domain([0, Ymax11 + 15]).range([height, 0]);  //
-  yScale12.domain([0, Ymax11 + 15]).range([height, 0]);  //to change ymax11 to ymax 12 when the new data
-  yScale13.domain([0, Ymax11 + 15]).range([height, 0]);  //to change ymax11 to ymax 13 when the new data
+  yScale12.domain([0, Ymax12 + 15]).range([height, 0]);  //to change ymax11 to ymax 12 when the new data
+  yScale13.domain([0, Ymax13 + 15]).range([height, 0]);  //to change ymax11 to ymax 13 when the new data
 
   console.log(Ymax11)
   console.log(Ymax21)
@@ -237,7 +252,7 @@ export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, 
  * @param {object[]} data The data to be used
  * @param {*} x The graph's x scale
  */
- export function createGroups (data, dataG1, x, x1) {
+ export function createGroups (data, dataG11, dataG12, dataG13, x, x1) {
   // TODO : Create the groups
   d3.selectAll('.group')
     .selectAll('.months')
@@ -247,14 +262,35 @@ export function updateYScale (yScale21, yScale22, yScale23, yScale11, yScale12, 
     .attr('class', 'attribut_month')
     .attr('transform', (value) => `translate(${x(+value.Months)}, 0)`)
 
-dataG1
-    d3.selectAll('.group')
-    .selectAll('.cat')
-    .data(dataG1)
+    console.log(data)
+  d3.selectAll('.group1')
+    .selectAll('.Cat')
+    .data(dataG11)
     .enter()
     .append('g')
     .attr('class', 'attribut_cat')
     .attr('transform', (value) => `translate(${x1(+value.Cat)}, 0)`)
+
+  console.log(dataG11)
+
+  d3.selectAll('.group1')
+  .selectAll('.Cat')
+  .data(dataG12)
+  .enter()
+  .append('g')
+  .attr('class', 'attribut_cat')
+  .attr('transform', (value) => `translate(${x1(+value.Cat)}, 0)`)
+
+  console.log(dataG11)
+  d3.selectAll('.group1')
+  .selectAll('.Cat')
+  .data(dataG13)
+  .enter()
+  .append('g')
+  .attr('class', 'attribut_cat')
+  .attr('transform', (value) => `translate(${x1(+value.Cat)}, 0)`)
+
+  console.log(dataG13)
 
 }
 
@@ -391,8 +427,8 @@ dataG1
   .enter()
   .append('rect')
   .attr('y', (value) => y11(value.Count))
-  .attr('x', (value) => xSubgroup1(value.player))
-  .attr('fill', (value) => color1(value.player))
+  .attr('x', (value) => xSubgroup1(value.Player))
+  .attr('fill', (value) => color1(value.Player))
   .attr('height', (value) => height - y11(value.Count))
   .attr('width', xSubgroup1.bandwidth())
   .on('mouseover', tip4.show)
@@ -405,8 +441,8 @@ dataG1
   .enter()
   .append('rect')
   .attr('y', (value) => y12(value.Count))
-  .attr('x', (value) => xSubgroup1(value.player))
-  .attr('fill', (value) => color1(value.player))
+  .attr('x', (value) => xSubgroup1(value.Player))
+  .attr('fill', (value) => color1(value.Player))
   .attr('height', (value) => height - y11(value.Count))
   .attr('width', xSubgroup1.bandwidth())
   .on('mouseover', tip4.show)
@@ -420,8 +456,8 @@ dataG1
   .enter()
   .append('rect')
   .attr('y', (value) => y13(value.Count))
-  .attr('x', (value) => xSubgroup1(value.player))
-  .attr('fill', (value) => color1(value.player))
+  .attr('x', (value) => xSubgroup1(value.Player))
+  .attr('fill', (value) => color1(value.Player))
   .attr('height', (value) => height - y13(value.Count))
   .attr('width', xSubgroup1.bandwidth())
   .on('mouseover', tip4.show)

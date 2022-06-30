@@ -141,9 +141,9 @@ exports.drawYAxis = drawYAxis;
 
 /*8*********** Generate view 1 graph ***********/
 function generateG1(width, height, margin) {
-  var g11 = d3.select('.graph11').select('svg').append('g').attr('id', 'map-g111').attr('class', 'group').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  var g12 = d3.select('.graph12').select('svg').append('g').attr('class', 'group').attr('id', 'map-g121').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  var g13 = d3.select('.graph13').select('svg').append('g').attr('class', 'group').attr('id', 'map-g131').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g11 = d3.select('.graph11').select('svg').append('g').attr('id', 'map-g111').attr('class', 'group1').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g12 = d3.select('.graph12').select('svg').append('g').attr('class', 'group1').attr('id', 'map-g121').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g13 = d3.select('.graph13').select('svg').append('g').attr('class', 'group1').attr('id', 'map-g131').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   return [g11, g12, g13];
 }
 /*8*********** Generate view 2 graph ***********/
@@ -220,8 +220,10 @@ function appendGraphLabels() {
 
 
 function appendAxesLabels() {
-  d3.selectAll('.svg').append('text').text('Compte Gls vs SoT').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
-  d3.selectAll('.svg').append('text').text('Mois joués en ligue 1').attr('class', 'x-axis-text').attr('fill', '#898989');
+  d3.select('#tab2').selectAll('.svg').append('text').text('Compte Gls vs SoT').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
+  d3.select('#tab2').selectAll('.svg').append('text').text('Mois joués en ligue 1').attr('class', 'x-axis-text').attr('fill', '#898989');
+  d3.select('#tab1').selectAll('.svg').append('text').text('Comptes pour Mbappe, Benzema ET Mane').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
+  d3.select('#tab1').selectAll('.svg').append('text').text(' Categorie de performances').attr('class', 'x-axis-text').attr('fill', '#898989');
 }
 /**
  * Positions the x axis label, y axis label and title label on the graph.
@@ -256,9 +258,9 @@ function defineColorScale(colors, Attributs) {
  */
 
 
-function updateXSubgroupScale(scale, scale1, players, Attributs, xScale, xScale1) {
-  scale.domain(players).range([0, xScale.bandwidth()]);
-  scale1.domain(Attributs).range([0, xScale1.bandwidth()]);
+function updateXSubgroupScale(scale, scale1, Attributs2, Attributs1, xScale, xScale1) {
+  scale.domain(Attributs2).range([0, xScale.bandwidth()]);
+  scale1.domain(Attributs1).range([0, xScale1.bandwidth()]);
 }
 /**
  * Draws the x axis at the bottom of the plot.
@@ -516,12 +518,18 @@ function updateXScaleV3(xScale, players, width) {
  */
 
 
-function updateGroupXScale(scale, scale1, data, dataG1, width) {
+function updateGroupXScale(scale, scale1, data, dataG11, dataG12, dataG13, width) {
   // Setting the domain and range of x scale
   scale.domain(data.map(function (elt) {
     return elt.Months;
   })).range([0, width]);
-  scale1.domain(dataG1.map(function (elt) {
+  scale1.domain(dataG11.map(function (elt) {
+    return elt.Cat;
+  })).range([0, width]);
+  scale1.domain(dataG12.map(function (elt) {
+    return elt.Cat;
+  })).range([0, width]);
+  scale1.domain(dataG13.map(function (elt) {
     return elt.Cat;
   })).range([0, width]);
 }
@@ -534,7 +542,7 @@ function updateGroupXScale(scale, scale1, data, dataG1, width) {
  */
 
 
-function updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG1, height) {
+function updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG11, dataG12, dataG13, height) {
   // a revoir
   //TODO : Set the domain and range of the graph's y scale
   var Ymax21 = 0;
@@ -550,9 +558,19 @@ function updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13
       if (row.Players[2].Count > Ymax23) Ymax23 = row.Players[2].Count;
     });
   });
-  dataG1.forEach(function (elt) {
+  dataG11.forEach(function (elt) {
     elt.Players.forEach(function (row) {
       if (row.Count > Ymax11) Ymax11 = row.Count;
+    });
+  });
+  dataG12.forEach(function (elt) {
+    elt.Players.forEach(function (row) {
+      if (row.Count > Ymax12) Ymax12 = row.Count;
+    });
+  });
+  dataG13.forEach(function (elt) {
+    elt.Players.forEach(function (row) {
+      if (row.Count > Ymax13) Ymax13 = row.Count;
     });
   });
   yScale21.domain([0, Ymax21 + 10]).range([height, 0]);
@@ -560,9 +578,9 @@ function updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13
   yScale23.domain([0, Ymax23 + 5]).range([height, 0]);
   yScale11.domain([0, Ymax11 + 15]).range([height, 0]); //
 
-  yScale12.domain([0, Ymax11 + 15]).range([height, 0]); //to change ymax11 to ymax 12 when the new data
+  yScale12.domain([0, Ymax12 + 15]).range([height, 0]); //to change ymax11 to ymax 12 when the new data
 
-  yScale13.domain([0, Ymax11 + 15]).range([height, 0]); //to change ymax11 to ymax 13 when the new data
+  yScale13.domain([0, Ymax13 + 15]).range([height, 0]); //to change ymax11 to ymax 13 when the new data
 
   console.log(Ymax11);
   console.log(Ymax21);
@@ -577,15 +595,24 @@ function updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13
  */
 
 
-function createGroups(data, dataG1, x, x1) {
+function createGroups(data, dataG11, dataG12, dataG13, x, x1) {
   // TODO : Create the groups
   d3.selectAll('.group').selectAll('.months').data(data).enter().append('g').attr('class', 'attribut_month').attr('transform', function (value) {
     return "translate(".concat(x(+value.Months), ", 0)");
   });
-  dataG1;
-  d3.selectAll('.group').selectAll('.cat').data(dataG1).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
+  console.log(data);
+  d3.selectAll('.group1').selectAll('.Cat').data(dataG11).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
     return "translate(".concat(x1(+value.Cat), ", 0)");
   });
+  console.log(dataG11);
+  d3.selectAll('.group1').selectAll('.Cat').data(dataG12).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
+    return "translate(".concat(x1(+value.Cat), ", 0)");
+  });
+  console.log(dataG11);
+  d3.selectAll('.group1').selectAll('.Cat').data(dataG13).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
+    return "translate(".concat(x1(+value.Cat), ", 0)");
+  });
+  console.log(dataG13);
 }
 /**
  * Updates the domain and range of the scale for the y axis
@@ -720,9 +747,9 @@ function drawBars(y21, y22, y23, y11, y12, y13, xSubgroup2, xSubgroup1, players,
   }).enter().append('rect').attr('y', function (value) {
     return y11(value.Count);
   }).attr('x', function (value) {
-    return xSubgroup1(value.player);
+    return xSubgroup1(value.Player);
   }).attr('fill', function (value) {
-    return color1(value.player);
+    return color1(value.Player);
   }).attr('height', function (value) {
     return height - y11(value.Count);
   }).attr('width', xSubgroup1.bandwidth()).on('mouseover', tip4.show).on('mouseout', tip4.hide);
@@ -735,9 +762,9 @@ function drawBars(y21, y22, y23, y11, y12, y13, xSubgroup2, xSubgroup1, players,
   }).enter().append('rect').attr('y', function (value) {
     return y12(value.Count);
   }).attr('x', function (value) {
-    return xSubgroup1(value.player);
+    return xSubgroup1(value.Player);
   }).attr('fill', function (value) {
-    return color1(value.player);
+    return color1(value.Player);
   }).attr('height', function (value) {
     return height - y11(value.Count);
   }).attr('width', xSubgroup1.bandwidth()).on('mouseover', tip4.show).on('mouseout', tip4.hide);
@@ -750,9 +777,9 @@ function drawBars(y21, y22, y23, y11, y12, y13, xSubgroup2, xSubgroup1, players,
   }).enter().append('rect').attr('y', function (value) {
     return y13(value.Count);
   }).attr('x', function (value) {
-    return xSubgroup1(value.player);
+    return xSubgroup1(value.Player);
   }).attr('fill', function (value) {
-    return color1(value.player);
+    return color1(value.Player);
   }).attr('height', function (value) {
     return height - y13(value.Count);
   }).attr('width', xSubgroup1.bandwidth()).on('mouseover', tip4.show).on('mouseout', tip4.hide);
@@ -768,7 +795,9 @@ exports.simplifyDisplayTitles = simplifyDisplayTitles;
 exports.summarizeLinesV3 = summarizeLinesV3;
 exports.arrangeV3 = arrangeV3;
 exports.summarizeLines = summarizeLines;
-exports.summarizeLinesG1 = summarizeLinesG1;
+exports.summarizeLinesG11 = summarizeLinesG11;
+exports.summarizeLinesG12 = summarizeLinesG12;
+exports.summarizeLinesG13 = summarizeLinesG13;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -996,7 +1025,8 @@ function countGoal(temps) {
   return temp;
 }
 
-function summarizeLinesG1(data) {
+function summarizeLinesG11(data) {
+  var tabtemp = [1, 2, 3, 4, 5];
   var allCategorys = ["Gls", "SoT", "GCA", "PKatt", "Ast"];
   var allPlayers = {
     1: "Mbappe",
@@ -1010,13 +1040,13 @@ function summarizeLinesG1(data) {
     return a - b;
   });
 
-  return allCategorys.map(function (cat) {
+  return tabtemp.map(function (cat) {
     return {
       Cat: cat,
       Players: getPlayers.map(function (player) {
         return {
           Player: allPlayers[player],
-          Count: countCategory(data.filter(function (row) {
+          Count: countCategory11(data.filter(function (row) {
             return parseInt(row.ID) === player;
           }), cat)
         };
@@ -1025,37 +1055,177 @@ function summarizeLinesG1(data) {
   });
 }
 
-function countCategory(dataLines, cat) {
+function summarizeLinesG12(data) {
+  var tabtemp = [1, 2, 3, 4, 5];
+  var allCategorys = ["Succ", "CrdY", "CrdR", "Cmp", "Press"];
+  var allPlayers = {
+    1: "Mbappe",
+    2: "Benzema",
+    3: "Mane"
+  };
+
+  var getPlayers = _toConsumableArray(new Set(data.map(function (row) {
+    return parseInt(row.ID);
+  }))).sort(function (a, b) {
+    return a - b;
+  });
+
+  return tabtemp.map(function (cat) {
+    return {
+      Cat: cat,
+      Players: getPlayers.map(function (player) {
+        return {
+          Player: allPlayers[player],
+          Count: countCategory12(data.filter(function (row) {
+            return parseInt(row.ID) === player;
+          }), cat)
+        };
+      })
+    };
+  });
+}
+
+function summarizeLinesG13(data) {
+  var tabtemp = [1, 2, 3, 4, 5];
+  var allCategorys = ["SoT", "Succ", "Int", "Ast", "Cmp"];
+  var allPlayers = {
+    1: "Mbappe",
+    2: "Benzema",
+    3: "Mane"
+  };
+
+  var getPlayers = _toConsumableArray(new Set(data.map(function (row) {
+    return parseInt(row.ID);
+  }))).sort(function (a, b) {
+    return a - b;
+  });
+
+  return tabtemp.map(function (cat) {
+    return {
+      Cat: cat,
+      Players: getPlayers.map(function (player) {
+        return {
+          Player: allPlayers[player],
+          Count: countCategory13(data.filter(function (row) {
+            return parseInt(row.ID) === player;
+          }), cat)
+        };
+      })
+    };
+  });
+}
+
+function countCategory11(dataLines, cat) {
   var countCat = 0;
 
   switch (cat) {
-    case "Gls":
+    case 1:
       dataLines.forEach(function (row) {
         countCat += row.Gls ? parseInt(row.Gls) : 0;
       });
       break;
 
-    case "SoT":
+    case 2:
       dataLines.forEach(function (row) {
         countCat += row.SoT ? parseInt(row.SoT) : 0;
       });
       break;
 
-    case "GCA":
+    case 3:
       dataLines.forEach(function (row) {
         countCat += row.GCA ? parseInt(row.GCA) : 0;
       });
       break;
 
-    case "PKatt":
+    case 4:
       dataLines.forEach(function (row) {
         countCat += row.PKatt ? parseInt(row.PKatt) : 0;
       });
       break;
 
-    case "Ast":
+    case 5:
       dataLines.forEach(function (row) {
         countCat += row.Ast ? parseInt(row.Ast) : 0;
+      });
+      break;
+
+    default:
+  }
+
+  return countCat;
+}
+
+function countCategory12(dataLines, cat) {
+  var countCat = 0;
+
+  switch (cat) {
+    case 1:
+      dataLines.forEach(function (row) {
+        countCat += row.Succ ? parseInt(row.Succ) : 0;
+      });
+      break;
+
+    case 2:
+      dataLines.forEach(function (row) {
+        countCat += row.CrdY ? parseInt(row.CrdY) : 0;
+      });
+      break;
+
+    case 3:
+      dataLines.forEach(function (row) {
+        countCat += row.CrdR ? parseInt(row.CrdR) : 0;
+      });
+      break;
+
+    case 4:
+      dataLines.forEach(function (row) {
+        countCat += row.Cmp ? parseInt(row.Cmp) : 0;
+      });
+      break;
+
+    case 5:
+      dataLines.forEach(function (row) {
+        countCat += row.Press ? parseInt(row.Press) : 0;
+      });
+      break;
+
+    default:
+  }
+
+  return countCat;
+}
+
+function countCategory13(dataLines, cat) {
+  var countCat = 0;
+
+  switch (cat) {
+    case 1:
+      dataLines.forEach(function (row) {
+        countCat += row.SoT ? parseInt(row.SoT) : 0;
+      });
+      break;
+
+    case 2:
+      dataLines.forEach(function (row) {
+        countCat += row.Succ ? parseInt(row.Succ) : 0;
+      });
+      break;
+
+    case 3:
+      dataLines.forEach(function (row) {
+        countCat += row.Int ? parseInt(row.Int) : 0;
+      });
+      break;
+
+    case 4:
+      dataLines.forEach(function (row) {
+        countCat += row.Ast ? parseInt(row.Ast) : 0;
+      });
+      break;
+
+    case 5:
+      dataLines.forEach(function (row) {
+        countCat += row.Cmp ? parseInt(row.Cmp) : 0;
       });
       break;
 
@@ -10672,18 +10842,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string[]} data The data to be used to draw the legend elements
  * @param {*} color The color scale used throughout the visualisation
  */
-function draw(data, color) {
+function draw(data, dataG, color2, color1) {
   // TODO : Generate the legend in the div with class "legend". Each SVG rectangle
   // should have a width and height set to 15.
   // Tip : Append one div per legend element using class "legend-element".
   console.log(data);
   data.forEach(function (attribut) {
     // create a div to content player name and color box
-    var div = d3.selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
+    var div = d3.select('#tab2').selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
 
     var SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px'); // adding rectangles to the SVG element
 
-    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color(attribut)); // match text for a div
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color2(attribut)); // match text for a div
+
+    div.append('span').text(attribut).attr('Style', 'font-weight: bold');
+  });
+  dataG.forEach(function (attribut) {
+    // create a div to content player name and color box
+    var div = d3.select('#tab1').selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
+
+    var SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px'); // adding rectangles to the SVG element
+
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color1(attribut)); // match text for a div
 
     div.append('span').text(attribut).attr('Style', 'font-weight: bold');
   });
@@ -14342,7 +14522,7 @@ function getContents(d, nbr) {
   if (nbr == 1) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[1], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[0].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
   if (nbr == 2) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[2], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[1].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
   if (nbr == 3) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[3], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[2].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
-  if (nbr == 4) return "\n                <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n                  Categorie :  ".concat(d.Cat, "\n                </span>\n                <div> \n                  <br> \n                    <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                      Joeur : ").concat(d.player, " \n                    </span>\n                  <br> \n                    <span> \n                      Compte : ").concat(d.Count, "\n                    </span>\n                </div>\n                ");
+  if (nbr == 4) return "\n                <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n                  Categorie :  ".concat(d.Cat, "\n                </span>\n                <div> \n                  <br> \n                    <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                      Joeur : ").concat(d.Player, " \n                    </span>\n                  <br> \n                    <span> \n                      Compte : ").concat(d.Count, "\n                    </span>\n                </div>\n                ");
 }
 },{}],"index.js":[function(require,module,exports) {
 'use strict';
@@ -14388,13 +14568,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     left: 230
   };
   var barColors2 = ['#0000FF', '#EE82EE'];
-  var barColors1 = ['#0000FF', '#EE82EE', '#AA82EE'];
+  var barColors1 = ['#0000FF', '#EA82EE', '#AA82EE'];
   var Attributs2 = ['SoT', 'Gls'];
-  var Attributs1 = ['Killian', 'Kharim', 'Sadio'];
+  var Attributs1 = ['Mbappe', 'Benzema', 'Mane'];
   var xScale = d3.scaleBand().padding(0.15);
-  var xScale1 = d3.scaleBand().padding(0.15);
+  var xScale1 = d3.scaleBand().padding(0.20);
   var xSubgroupScale = d3.scaleBand().padding([0.015]);
-  var xSubgroupScale1 = d3.scaleBand().padding([0.015]);
+  var xSubgroupScale1 = d3.scaleBand().padding([0.020]);
   var yScale21 = d3.scaleLinear();
   var yScale22 = d3.scaleLinear();
   var yScale23 = d3.scaleLinear();
@@ -14432,8 +14612,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     d3.select('.graph13').select('.svg').call(tip4);
     d3.csv('./data.csv').then(function (datas) {
       var data = preprocess.summarizeLines(datas);
-      var dataG1 = preprocess.summarizeLinesG1(datas);
-      console.log(dataG1);
+      var dataG11 = preprocess.summarizeLinesG11(datas);
+      var dataG12 = preprocess.summarizeLinesG12(datas);
+      var dataG13 = preprocess.summarizeLinesG13(datas);
+      console.log(dataG11);
       console.log(data);
       var graph2 = helper.generateG2(svgSize.width, svgSize.height, margin);
       var graph1 = helper.generateG1(svgSize.width, svgSize.height, margin); //const g23 = helper.generateG23(svgSize.width, svgSize.height, margin)
@@ -14443,15 +14625,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       helper.positionLabels(svgSize.width - margin.left - margin.bottom, svgSize.height - margin.top - margin.bottom);
       var color2 = helper.defineColorScale(barColors2, Attributs2);
       var color1 = helper.defineColorScale(barColors1, Attributs1);
-      legend.draw(Attributs2, color2);
-      legend.draw(Attributs1, color1); /// revoir
-
-      viz.updateGroupXScale(xScale, xScale1, data, dataG1, svgSize.width - margin.left - margin.bottom);
+      legend.draw(Attributs2, Attributs1, color2, color1);
+      viz.updateGroupXScale(xScale, xScale1, data, dataG11, dataG12, dataG13, svgSize.width - margin.left - margin.bottom);
       helper.updateXSubgroupScale(xSubgroupScale, xSubgroupScale1, Attributs2, Attributs1, xScale, xScale1);
-      viz.updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG1, svgSize.height - margin.top - margin.bottom);
+      viz.updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG11, dataG12, dataG13, svgSize.height - margin.top - margin.bottom);
       helper.drawXAxis(xScale, xScale1, svgSize.height - margin.top - margin.bottom);
       helper.drawYAxis(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13);
-      viz.createGroups(data, dataG1, xScale, xScale1);
+      viz.createGroups(data, dataG11, dataG12, dataG13, xScale, xScale1);
       viz.drawBars(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, xSubgroupScale, xSubgroupScale1, Attributs2, svgSize.height - margin.top - margin.bottom, color2, color1, tip1, tip2, tip3, tip4);
     });
   } // construct the graph 3

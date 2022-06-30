@@ -80,7 +80,7 @@ const Attributs = {"SoT": "Tirs cadrés (SoT)", "Gls": "buts (Gls)"}
                 <div> 
                   <br> 
                     <span style="font-weight:bold;  margin-bottom: 1em">
-                      Joeur : ${d.player} 
+                      Joeur : ${d.Player} 
                     </span>
                   <br> 
                     <span> 

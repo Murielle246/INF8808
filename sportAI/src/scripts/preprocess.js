@@ -166,50 +166,155 @@ function countGoal(temps) {
 }
 
 
-export function summarizeLinesG1 (data) {
+export function summarizeLinesG11 (data) {
+  const tabtemp = [1,2,3,4,5]
   const allCategorys = ["Gls", "SoT", "GCA", "PKatt", "Ast"]
   const allPlayers = {1:"Mbappe",2:"Benzema", 3:"Mane"}
 
   let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
   
 
-  return allCategorys.map((cat) => ({
+  return tabtemp.map((cat) => ({
     Cat: cat,
     Players: getPlayers
       .map((player) => ({
         Player: allPlayers[player],
-        Count: countCategory (data.filter((row) => parseInt(row.ID) === player), cat)
+        Count: countCategory11 (data.filter((row) => parseInt(row.ID) === player), cat)
+      }))
+  }))
+}
+
+export function summarizeLinesG12 (data) {
+  const tabtemp = [1,2,3,4,5]
+  const allCategorys = ["Succ", "CrdY", "CrdR", "Cmp", "Press"]
+  const allPlayers = {1:"Mbappe",2:"Benzema", 3:"Mane"}
+
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+  
+
+  return tabtemp.map((cat) => ({
+    Cat: cat,
+    Players: getPlayers
+      .map((player) => ({
+        Player: allPlayers[player],
+        Count: countCategory12 (data.filter((row) => parseInt(row.ID) === player), cat)
+      }))
+  }))
+}
+
+export function summarizeLinesG13 (data) {
+  const tabtemp = [1,2,3,4,5]
+  const allCategorys = ["SoT", "Succ", "Int", "Ast", "Cmp"]
+  const allPlayers = {1:"Mbappe",2:"Benzema", 3:"Mane"}
+
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+  
+
+  return tabtemp.map((cat) => ({
+    Cat: cat,
+    Players: getPlayers
+      .map((player) => ({
+        Player: allPlayers[player],
+        Count: countCategory13 (data.filter((row) => parseInt(row.ID) === player), cat)
       }))
   }))
 }
 
 
-function countCategory(dataLines, cat) {
+function countCategory11(dataLines, cat) {
   let countCat = 0;
   switch (cat) {
-      case "Gls":
+      case 1:
         dataLines.forEach((row) =>{
           countCat += (row.Gls ?parseInt(row.Gls):0);
         })
         break;
-      case "SoT":
+      case 2:
         dataLines.forEach((row) =>{
           countCat += (row.SoT ? parseInt(row.SoT):0);  
         })
         break;
-      case "GCA":
+      case 3:
         dataLines.forEach((row) =>{
           countCat += (row.GCA ? parseInt(row.GCA):0); 
         })
         break;
-      case "PKatt":
+      case 4:
         dataLines.forEach((row) =>{
           countCat += (row.PKatt ? parseInt(row.PKatt):0); 
         })
         break;
-      case "Ast":
+      case 5:
         dataLines.forEach((row) =>{
           countCat += (row.Ast ? parseInt(row.Ast):0); 
+        })
+        break;
+      default:
+          
+    }
+  return countCat;
+}
+
+function countCategory12(dataLines, cat) {
+  let countCat = 0;
+  switch (cat) {
+      case 1:
+        dataLines.forEach((row) =>{
+          countCat += (row.Succ ?parseInt(row.Succ):0);
+        })
+        break;
+      case 2:
+        dataLines.forEach((row) =>{
+          countCat += (row.CrdY ? parseInt(row.CrdY):0);  
+        })
+        break;
+      case 3:
+        dataLines.forEach((row) =>{
+          countCat += (row.CrdR ? parseInt(row.CrdR):0); 
+        })
+        break;
+      case 4:
+        dataLines.forEach((row) =>{
+          countCat += (row.Cmp ? parseInt(row.Cmp):0); 
+        })
+        break;
+      case 5:
+        dataLines.forEach((row) =>{
+          countCat += (row.Press ? parseInt(row.Press):0); 
+        })
+        break;
+      default:
+          
+    }
+  return countCat;
+}
+
+function countCategory13(dataLines, cat) {
+  let countCat = 0;
+  switch (cat) {
+      case 1:
+        dataLines.forEach((row) =>{
+          countCat += (row.SoT ?parseInt(row.SoT):0);
+        })
+        break;
+      case 2:
+        dataLines.forEach((row) =>{
+          countCat += (row.Succ ? parseInt(row.Succ):0);  
+        })
+        break;
+      case 3:
+        dataLines.forEach((row) =>{
+          countCat += (row.Int ? parseInt(row.Int):0); 
+        })
+        break;
+      case 4:
+        dataLines.forEach((row) =>{
+          countCat += (row.Ast ? parseInt(row.Ast):0); 
+        })
+        break;
+      case 5:
+        dataLines.forEach((row) =>{
+          countCat += (row.Cmp ? parseInt(row.Cmp):0); 
         })
         break;
       default:

@@ -98,14 +98,17 @@ function countGoal(temps) {
 
 export function summarizeLinesG1 (data) {
   const allCategorys = ["Gls", "SoT", "GCA", "PKatt", "Ast"]
-  const allPlayers = ["Mbappe","Benzema","Mane"]
+  const allPlayers = {1:"Mbappe",2:"Benzema", 3:"Mane"}
+
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+  
 
   return allCategorys.map((cat) => ({
     Cat: cat,
-    Players: allPlayers
+    Players: getPlayers
       .map((player) => ({
-        Player: player,
-        Count: countCategory (data.filter((row) => parseInt(row.ID) === (allPlayers.findIndex(elt => elt===player)+1)), cat)
+        Player: allPlayers[player],
+        Count: countCategory (data.filter((row) => parseInt(row.ID) === player), cat)
       }))
   }))
 }

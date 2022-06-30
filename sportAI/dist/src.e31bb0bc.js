@@ -757,17 +757,26 @@ function countGoal(temps) {
 
 function summarizeLinesG1(data) {
   var allCategorys = ["Gls", "SoT", "GCA", "PKatt", "Ast"];
-  var allPlayers = ["Mbappe", "Benzema", "Mane"];
+  var allPlayers = {
+    1: "Mbappe",
+    2: "Benzema",
+    3: "Mane"
+  };
+
+  var getPlayers = _toConsumableArray(new Set(data.map(function (row) {
+    return parseInt(row.ID);
+  }))).sort(function (a, b) {
+    return a - b;
+  });
+
   return allCategorys.map(function (cat) {
     return {
       Cat: cat,
-      Players: allPlayers.map(function (player) {
+      Players: getPlayers.map(function (player) {
         return {
-          Player: player,
+          Player: allPlayers[player],
           Count: countCategory(data.filter(function (row) {
-            return parseInt(row.ID) === allPlayers.findIndex(function (elt) {
-              return elt === player;
-            }) + 1;
+            return parseInt(row.ID) === player;
           }), cat)
         };
       })
@@ -12681,7 +12690,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56083" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64692" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -110,25 +110,20 @@ import * as tooltip from './scripts/tooltip.js'
     })
   }
 
-
   
-    // visualisation 3
+    // construct the graph 3
     let svgSizeV3
     let graphSizeV3
-
     const marginV3 = { top: 35, right: 200, bottom: 35, left: 200 }
-
     const xScaleV3 = d3.scaleBand().padding(0.05)
     const yScaleV3 = d3.scaleBand().padding(0.2)
     const colorScaleV3 = d3.scaleSequential(d3Chromatic.interpolateYlGnBu)
-
     const players = ['Mbappe', 'Benzema', 'Mane']
     const aspects = ['Tkl', 'Ast', 'Gls', 'Succ','Int']
 
-    d3.csv('./stats_summary_GLOBAL.csv', d3.autoType).then(function (data) {
+    d3.csv('./data.csv', d3.autoType).then(function (data) {
     data = preprocess.summarizeLinesV3(data)
     data = preprocess.arrangeV3(data)
-    console.log(data)
 
     viz.setColorScaleDomainV3(colorScaleV3, data)
 
@@ -145,7 +140,7 @@ import * as tooltip from './scripts/tooltip.js'
     buildV3()
 
     /**
-     *   This function handles the graph's sizing.
+     *   This function handles the graph 3's sizing.
      */
     function setSizingV3 () {
 
@@ -163,7 +158,7 @@ import * as tooltip from './scripts/tooltip.js'
     }
 
     /**
-     *   This function builds the graph.
+     *   This function builds the graph 3.
      */
     function buildV3 () {
       viz.updateXScaleV3(xScaleV3, players, graphSizeV3.width)

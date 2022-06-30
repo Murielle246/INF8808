@@ -591,14 +591,13 @@ function createGroups(data, dataG1, x, x1) {
  * Updates the domain and range of the scale for the y axis
  *
  * @param {*} yScale The scale for the y axis
- * @param {string[]} aspects The names of the neighborhoods // les  aspects à comparer
+ * @param {string[]} aspects les  aspects à comparer
  * @param {number} height The height of the diagram
  */
 
 
 function updateYScaleV3(yScale, aspects, height) {
   // TODO : Update Y scale
-  // Make sure to sort the neighborhood names alphabetically
   yScale.range([0, height]);
   yScale.domain(aspects); // les  aspects à comparer
 }
@@ -884,11 +883,14 @@ function summarizeLinesV3(data) {
 function arrangeV3(tabtemp) {
   var tableResult = [];
   var players = ['Mbappe', 'Benzema', 'Mane'];
+  var aspectsNoAbbr = ["Nombre de joueurs tacklés", "Nombre de passes décisives", "Nombre de buts marqué", "Nombre de dribles réussis", "Nombre d’intersections"];
   var aspects = ['Tkl', 'Ast', 'Gls', 'Succ', 'Int'];
   var indexplayer = -1;
+  var indexAspect = -1;
   players.forEach(function (player) {
     indexplayer += 1;
     aspects.forEach(function (aspect) {
+      indexAspect += 1;
       tableResult.push({
         "Players": player,
         "Aspects": aspect,
@@ -14452,7 +14454,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       viz.createGroups(data, dataG1, xScale, xScale1);
       viz.drawBars(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, xSubgroupScale, xSubgroupScale1, Attributs2, svgSize.height - margin.top - margin.bottom, color2, color1, tip1, tip2, tip3, tip4);
     });
-  } // visualisation 3
+  } // construct the graph 3
 
 
   var svgSizeV3;
@@ -14468,10 +14470,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
   var colorScaleV3 = d3.scaleSequential(d3Chromatic.interpolateYlGnBu);
   var players = ['Mbappe', 'Benzema', 'Mane'];
   var aspects = ['Tkl', 'Ast', 'Gls', 'Succ', 'Int'];
-  d3.csv('./stats_summary_GLOBAL.csv', d3.autoType).then(function (data) {
+  d3.csv('./data.csv', d3.autoType).then(function (data) {
     data = preprocess.summarizeLinesV3(data);
     data = preprocess.arrangeV3(data);
-    console.log(data);
     viz.setColorScaleDomainV3(colorScaleV3, data);
     legend.initGradientV3(colorScaleV3);
     legend.initLegendBarV3();
@@ -14482,7 +14483,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     setSizingV3();
     buildV3();
     /**
-     *   This function handles the graph's sizing.
+     *   This function handles the graph 3's sizing.
      */
 
     function setSizingV3() {
@@ -14497,7 +14498,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       helper.setCanvasSizeV3(svgSizeV3.width, svgSizeV3.height);
     }
     /**
-     *   This function builds the graph.
+     *   This function builds the graph 3.
      */
 
 
@@ -14546,7 +14547,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54669" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60832" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

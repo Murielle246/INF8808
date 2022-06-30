@@ -71,11 +71,20 @@ export function summarizeLinesV3 (data) {
 export function arrangeV3(tabtemp) {
   let tableResult = [];
   let players = ['Mbappe', 'Benzema', 'Mane']
+  let aspectsNoAbbr = [
+    "Nombre de joueurs tacklés",
+    "Nombre de passes décisives",
+    "Nombre de buts marqué",
+    "Nombre de dribles réussis",
+    "Nombre d’intersections"
+  ]
   let aspects = ['Tkl', 'Ast', 'Gls', 'Succ','Int']
   let indexplayer = -1
+  let indexAspect = -1
   players.forEach((player) => {
     indexplayer += 1
     aspects.forEach((aspect)=> {
+    indexAspect += 1
       tableResult.push({"Players" : player, "Aspects" :aspect, "Counts" :tabtemp[indexplayer][aspect]})
     })
   })

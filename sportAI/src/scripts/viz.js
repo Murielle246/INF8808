@@ -262,12 +262,11 @@ dataG1
  * Updates the domain and range of the scale for the y axis
  *
  * @param {*} yScale The scale for the y axis
- * @param {string[]} aspects The names of the neighborhoods // les  aspects à comparer
+ * @param {string[]} aspects les  aspects à comparer
  * @param {number} height The height of the diagram
  */
  export function updateYScaleV3 (yScale, aspects, height) {
   // TODO : Update Y scale
-  // Make sure to sort the neighborhood names alphabetically
   yScale.range([ 0, height ]);
 	yScale.domain(aspects);  // les  aspects à comparer
 }

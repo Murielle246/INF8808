@@ -5,7 +5,7 @@ export function generateG1 (width, height, margin) {
     .select('svg')
     .append('g')
     .attr('id', 'map-g111')
-    .attr('class', 'group')
+    .attr('class', 'group1')
     .attr('width', width)
     .attr('height', height)
     .attr('transform',
@@ -14,7 +14,7 @@ export function generateG1 (width, height, margin) {
   const g12 = d3.select('.graph12')
   .select('svg')
   .append('g')
-  .attr('class', 'group')
+  .attr('class', 'group1')
   .attr('id', 'map-g121')
   .attr('width', width)
   .attr('height', height)
@@ -24,7 +24,7 @@ export function generateG1 (width, height, margin) {
    const g13 =  d3.select('.graph13')
     .select('svg')
     .append('g')
-    .attr('class', 'group')
+    .attr('class', 'group1')
     .attr('id', 'map-g131')
     .attr('width', width)
     .attr('height', height)
@@ -256,15 +256,28 @@ export function appendGraphLabels () {
  */
  export function appendAxesLabels () {
 
-  d3.selectAll('.svg').append('text')
+  d3.select('#tab2').selectAll('.svg').append('text')
     .text('Compte Gls vs SoT')
     .attr('class', 'y-axis-text')
     .attr('transform', 'rotate(-90)')
     .attr('fill', '#898989')
     .attr('font-size', 12)
 
-  d3.selectAll('.svg').append('text')
+  d3.select('#tab2').selectAll('.svg').append('text')
     .text('Mois joués en ligue 1')
+    .attr('class', 'x-axis-text')
+    .attr('fill', '#898989')
+
+
+    d3.select('#tab1').selectAll('.svg').append('text')
+    .text('Comptes pour Mbappe, Benzema ET Mane')
+    .attr('class', 'y-axis-text')
+    .attr('transform', 'rotate(-90)')
+    .attr('fill', '#898989')
+    .attr('font-size', 12)
+
+  d3.select('#tab1').selectAll('.svg').append('text')
+    .text(' Categorie de performances')
     .attr('class', 'x-axis-text')
     .attr('fill', '#898989')
 }
@@ -304,13 +317,14 @@ export function appendGraphLabels () {
  * @param {string[]} players The players in the subgroups
  * @param {*} xScale The graph's encompassing x scale
  */
-export function updateXSubgroupScale (scale, scale1, players, Attributs, xScale, xScale1) {
+export function updateXSubgroupScale (scale, scale1, Attributs2, Attributs1, xScale, xScale1) {
+
   scale
-    .domain(players)
+    .domain(Attributs2)
     .range([0, xScale.bandwidth()])
 
-    scale1
-    .domain(Attributs)
+  scale1
+    .domain(Attributs1)
     .range([0, xScale1.bandwidth()])
 }
 

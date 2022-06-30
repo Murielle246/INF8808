@@ -137,9 +137,9 @@ exports.drawYAxis = drawYAxis;
 
 /*8*********** Generate view 1 graph ***********/
 function generateG1(width, height, margin) {
-  var g11 = d3.select('.graph11').select('svg').append('g').attr('id', 'map-g111').attr('class', 'group').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  var g12 = d3.select('.graph12').select('svg').append('g').attr('class', 'group').attr('id', 'map-g121').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  var g13 = d3.select('.graph13').select('svg').append('g').attr('class', 'group').attr('id', 'map-g131').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g11 = d3.select('.graph11').select('svg').append('g').attr('id', 'map-g111').attr('class', 'group1').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g12 = d3.select('.graph12').select('svg').append('g').attr('class', 'group1').attr('id', 'map-g121').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  var g13 = d3.select('.graph13').select('svg').append('g').attr('class', 'group1').attr('id', 'map-g131').attr('width', width).attr('height', height).attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   return [g11, g12, g13];
 }
 /*8*********** Generate view 2 graph ***********/
@@ -216,8 +216,10 @@ function appendGraphLabels() {
 
 
 function appendAxesLabels() {
-  d3.selectAll('.svg').append('text').text('Compte Gls vs SoT').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
-  d3.selectAll('.svg').append('text').text('Mois joués en ligue 1').attr('class', 'x-axis-text').attr('fill', '#898989');
+  d3.select('#tab2').selectAll('.svg').append('text').text('Compte Gls vs SoT').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
+  d3.select('#tab2').selectAll('.svg').append('text').text('Mois joués en ligue 1').attr('class', 'x-axis-text').attr('fill', '#898989');
+  d3.select('#tab1').selectAll('.svg').append('text').text('Comptes pour Mbappe, Benzema ET Mane').attr('class', 'y-axis-text').attr('transform', 'rotate(-90)').attr('fill', '#898989').attr('font-size', 12);
+  d3.select('#tab1').selectAll('.svg').append('text').text(' Categorie de performances').attr('class', 'x-axis-text').attr('fill', '#898989');
 }
 /**
  * Positions the x axis label, y axis label and title label on the graph.
@@ -252,9 +254,9 @@ function defineColorScale(colors, Attributs) {
  */
 
 
-function updateXSubgroupScale(scale, scale1, players, Attributs, xScale, xScale1) {
-  scale.domain(players).range([0, xScale.bandwidth()]);
-  scale1.domain(Attributs).range([0, xScale1.bandwidth()]);
+function updateXSubgroupScale(scale, scale1, Attributs2, Attributs1, xScale, xScale1) {
+  scale.domain(Attributs2).range([0, xScale.bandwidth()]);
+  scale1.domain(Attributs1).range([0, xScale1.bandwidth()]);
 }
 /**
  * Draws the x axis at the bottom of the plot.
@@ -493,10 +495,11 @@ function createGroups(data, dataG1, x, x1) {
   d3.selectAll('.group').selectAll('.months').data(data).enter().append('g').attr('class', 'attribut_month').attr('transform', function (value) {
     return "translate(".concat(x(+value.Months), ", 0)");
   });
-  dataG1;
-  d3.selectAll('.group').selectAll('.cat').data(dataG1).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
+  console.log(data);
+  d3.selectAll('.group1').selectAll('.Cat').data(dataG1).enter().append('g').attr('class', 'attribut_cat').attr('transform', function (value) {
     return "translate(".concat(x1(+value.Cat), ", 0)");
   });
+  console.log(dataG1);
 }
 /**
  * Draws the bars inside the groups
@@ -10427,18 +10430,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string[]} data The data to be used to draw the legend elements
  * @param {*} color The color scale used throughout the visualisation
  */
-function draw(data, color) {
+function draw(data, dataG, color2, color1) {
   // TODO : Generate the legend in the div with class "legend". Each SVG rectangle
   // should have a width and height set to 15.
   // Tip : Append one div per legend element using class "legend-element".
   console.log(data);
   data.forEach(function (attribut) {
     // create a div to content player name and color box
-    var div = d3.selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
+    var div = d3.select('#tab2').selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
 
     var SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px'); // adding rectangles to the SVG element
 
-    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color(attribut)); // match text for a div
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color2(attribut)); // match text for a div
+
+    div.append('span').text(attribut).attr('Style', 'font-weight: bold');
+  });
+  dataG.forEach(function (attribut) {
+    // create a div to content player name and color box
+    var div = d3.select('#tab1').selectAll('div.legend').append('div').attr('class', 'legend-element'); // create SVG for rectangle
+
+    var SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px'); // adding rectangles to the SVG element
+
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color1(attribut)); // match text for a div
 
     div.append('span').text(attribut).attr('Style', 'font-weight: bold');
   });
@@ -12552,7 +12565,7 @@ function getContents(d, nbr) {
   if (nbr == 1) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[1], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[0].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
   if (nbr == 2) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[2], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[1].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
   if (nbr == 3) return "\n            <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n              Mois :  ".concat(months[d.Months], "\n            </span>\n            <div> \n              <br> \n                <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                  Joeur : ").concat(players[3], " \n                </span>\n              <br> \n                <span> \n                  Compte : ").concat(d.Players[2].Count, "\n                </span>\n              <br> \n                <span> \n                  Cat\xE9gorie : ").concat(Attributs[d.Attribut], "\n                </span> \n            </div>\n            ");
-  if (nbr == 4) return "\n                <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n                  Categorie :  ".concat(d.Cat, "\n                </span>\n                <div> \n                  <br> \n                    <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                      Joeur : ").concat(d.player, " \n                    </span>\n                  <br> \n                    <span> \n                      Compte : ").concat(d.Count, "\n                    </span>\n                </div>\n                ");
+  if (nbr == 4) return "\n                <span style=\"font-family: Open Sans Condensed'; font-size:24px; font-weight:normal\">\n                  Categorie :  ".concat(d.Cat, "\n                </span>\n                <div> \n                  <br> \n                    <span style=\"font-weight:bold;  margin-bottom: 1em\">\n                      Joeur : ").concat(d.Player, " \n                    </span>\n                  <br> \n                    <span> \n                      Compte : ").concat(d.Count, "\n                    </span>\n                </div>\n                ");
 }
 },{}],"index.js":[function(require,module,exports) {
 'use strict';
@@ -12594,13 +12607,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     left: 230
   };
   var barColors2 = ['#0000FF', '#EE82EE'];
-  var barColors1 = ['#0000FF', '#EE82EE', '#AA82EE'];
+  var barColors1 = ['#0000FF', '#EA82EE', '#AA82EE'];
   var Attributs2 = ['SoT', 'Gls'];
-  var Attributs1 = ['Killian', 'Kharim', 'Sadio'];
+  var Attributs1 = ['Mbappe', 'Benzema', 'Mane'];
   var xScale = d3.scaleBand().padding(0.15);
-  var xScale1 = d3.scaleBand().padding(0.15);
+  var xScale1 = d3.scaleBand().padding(0.20);
   var xSubgroupScale = d3.scaleBand().padding([0.015]);
-  var xSubgroupScale1 = d3.scaleBand().padding([0.015]);
+  var xSubgroupScale1 = d3.scaleBand().padding([0.020]);
   var yScale21 = d3.scaleLinear();
   var yScale22 = d3.scaleLinear();
   var yScale23 = d3.scaleLinear();
@@ -12649,9 +12662,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       helper.positionLabels(svgSize.width - margin.left - margin.bottom, svgSize.height - margin.top - margin.bottom);
       var color2 = helper.defineColorScale(barColors2, Attributs2);
       var color1 = helper.defineColorScale(barColors1, Attributs1);
-      legend.draw(Attributs2, color2);
-      legend.draw(Attributs1, color1); /// revoir
-
+      legend.draw(Attributs2, Attributs1, color2, color1);
       viz.updateGroupXScale(xScale, xScale1, data, dataG1, svgSize.width - margin.left - margin.bottom);
       helper.updateXSubgroupScale(xSubgroupScale, xSubgroupScale1, Attributs2, Attributs1, xScale, xScale1);
       viz.updateYScale(yScale21, yScale22, yScale23, yScale11, yScale12, yScale13, data, dataG1, svgSize.height - margin.top - margin.bottom);
@@ -12690,7 +12701,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53834" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50730" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

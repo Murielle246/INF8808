@@ -95,3 +95,117 @@ export function mapMarkers (data, color, panel) {
       panel.display(elt, color)
     })
 }
+
+/**
+ * Sets the domain of the color scale
+ *
+ * @param {*} colorScale The color scale used in the heatmap
+ * @param {object[]} data The data to be displayed
+ */
+ export function setColorScaleDomainV3 (colorScale, data) {
+  // TODO : Set domain of color scale
+  const allData = data.map(elt => elt.Counts);
+  colorScale.domain([Math.min(...allData), Math.max(...allData)]);
+}
+
+/**
+ * For each data element, appends a group 'g' to which an SVG rect is appended
+ *
+ * @param {object[]} data The data to use for binding
+ */
+ export function appendRectsV3 (data) {
+  // TODO : Append SVG rect elements
+  d3.select('#graph3-g')
+  .selectAll('.element')
+  .data(data)
+  .enter()
+  .append('g')
+  .attr('class', 'element')
+  .append('rect');
+}
+
+/**
+ * Updates the domain and range of the scale for the x axis
+ *
+ * @param {*} xScale The scale for the x axis
+ * @param {string[]} players The data to be used
+ * @param {number} width The width of the diagram
+ */
+ export function updateXScaleV3 (xScale, players, width) {
+  // TODO : Update X scale
+  xScale.range([ 0, width ]);
+	xScale.domain(players); 
+
+}
+
+/**
+ * Updates the domain and range of the scale for the y axis
+ *
+ * @param {*} yScale The scale for the y axis
+ * @param {string[]} aspects The names of the neighborhoods // les  aspects à comparer
+ * @param {number} height The height of the diagram
+ */
+ export function updateYScaleV3 (yScale, aspects, height) {
+  // TODO : Update Y scale
+  // Make sure to sort the neighborhood names alphabetically
+  yScale.range([ 0, height ]);
+	yScale.domain(aspects);  // les  aspects à comparer
+}
+
+
+/**
+ *  Draws the X axis at the top of the diagram.
+ *
+ *  @param {*} xScale The scale to use to draw the axis
+ */
+ export function drawXAxisV3 (xScale) {
+  // TODO : Draw X axis
+  d3.select('.main-svg3')
+	  .select('.x.axis')
+    .call(d3.axisTop(xScale));
+}
+
+
+/**
+ * Draws the Y axis to the right of the diagram.
+ *
+ * @param {*} yScale The scale to use to draw the axis
+ * @param {number} width The width of the graphic
+ */
+ export function drawYAxisV3 (yScale, width) {
+  // TODO : Draw Y axis
+  d3.select('.main-svg3')
+	  .select('.y.axis')
+    .call(d3.axisRight(yScale))
+	  .attr('transform', `translate(${width},0)`);
+}
+
+/**
+ * Rotates the ticks on the X axis 45 degrees towards the left.
+ */
+ export function rotateXTicksV3 () {
+  // TODO : Rotate X axis' ticks
+  d3.select('.main-svg3')
+  .select('.x.axis')
+  .selectAll('.tick')
+  .selectAll('text')
+  .attr('transform','rotate(-45)');
+}
+
+/**
+ * After the rectangles have been appended, this function dictates
+ * their position, size and fill color.
+ *
+ * @param {*} xScale The x scale used to position the rectangles
+ * @param {*} yScale The y scale used to position the rectangles
+ * @param {*} colorScale The color scale used to set the rectangles' colors
+ */
+ export function updateRectsV3 (xScale, yScale, colorScale) {
+  // TODO : Set position, size and fill of rectangles according to bound data
+  d3.selectAll('.element')
+  .attr('transform', d => `translate(${xScale(d.Players)},${yScale(d.Aspects)})`) // the d  name and the aspects
+  .selectAll('rect')
+  .attr('width', xScale.bandwidth())
+  .attr('height', yScale.bandwidth())
+  .attr('fill', d => colorScale(d.Counts));
+}

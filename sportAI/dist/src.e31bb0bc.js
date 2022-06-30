@@ -132,6 +132,9 @@ exports.getSimulation = getSimulation;
 exports.simulate = simulate;
 exports.getProjection = getProjection;
 exports.getPath = getPath;
+exports.generateGV3 = generateGV3;
+exports.setCanvasSizeV3 = setCanvasSizeV3;
+exports.appendAxesV3 = appendAxesV3;
 
 /**
  * Generates the SVG element g which will contain the map base.
@@ -239,6 +242,39 @@ function getProjection() {
 function getPath(projection) {
   return d3.geoPath().projection(projection);
 }
+/**
+ * Generates the SVG element g which will contain the data visualisation.
+ *
+ * @param {object} margin The desired margins around the graph
+ * @returns {*} The d3 Selection for the created g element
+ */
+
+
+function generateGV3(margin) {
+  return d3.select('.graph3').select('svg').append('g').attr('id', 'graph3-g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+}
+/**
+ * Sets the size of the SVG canvas containing the graph.
+ *
+ * @param {number} width The desired width
+ * @param {number} height The desired height
+ */
+
+
+function setCanvasSizeV3(width, height) {
+  d3.select('#map3').select('svg').attr('width', width).attr('height', height);
+}
+/**
+ * Appends an SVG g element which will contain the axes.
+ *
+ * @param {*} g The d3 Selection of the graph's g SVG element
+ */
+
+
+function appendAxesV3(g) {
+  g.append('g').attr('class', 'x axis');
+  g.append('g').attr('class', 'y axis');
+}
 },{}],"scripts/viz.js":[function(require,module,exports) {
 "use strict";
 
@@ -249,6 +285,14 @@ exports.colorDomain = colorDomain;
 exports.mapBackground = mapBackground;
 exports.showMapLabel = showMapLabel;
 exports.mapMarkers = mapMarkers;
+exports.setColorScaleDomainV3 = setColorScaleDomainV3;
+exports.appendRectsV3 = appendRectsV3;
+exports.updateXScaleV3 = updateXScaleV3;
+exports.updateYScaleV3 = updateYScaleV3;
+exports.drawXAxisV3 = drawXAxisV3;
+exports.drawYAxisV3 = drawYAxisV3;
+exports.rotateXTicksV3 = rotateXTicksV3;
+exports.updateRectsV3 = updateRectsV3;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -339,6 +383,112 @@ function mapMarkers(data, color, panel) {
     panel.display(elt, color);
   });
 }
+/**
+ * Sets the domain of the color scale
+ *
+ * @param {*} colorScale The color scale used in the heatmap
+ * @param {object[]} data The data to be displayed
+ */
+
+
+function setColorScaleDomainV3(colorScale, data) {
+  // TODO : Set domain of color scale
+  var allData = data.map(function (elt) {
+    return elt.Counts;
+  });
+  colorScale.domain([Math.min.apply(Math, _toConsumableArray(allData)), Math.max.apply(Math, _toConsumableArray(allData))]);
+}
+/**
+ * For each data element, appends a group 'g' to which an SVG rect is appended
+ *
+ * @param {object[]} data The data to use for binding
+ */
+
+
+function appendRectsV3(data) {
+  // TODO : Append SVG rect elements
+  d3.select('#graph3-g').selectAll('.element').data(data).enter().append('g').attr('class', 'element').append('rect');
+}
+/**
+ * Updates the domain and range of the scale for the x axis
+ *
+ * @param {*} xScale The scale for the x axis
+ * @param {string[]} players The data to be used
+ * @param {number} width The width of the diagram
+ */
+
+
+function updateXScaleV3(xScale, players, width) {
+  // TODO : Update X scale
+  xScale.range([0, width]);
+  xScale.domain(players);
+}
+/**
+ * Updates the domain and range of the scale for the y axis
+ *
+ * @param {*} yScale The scale for the y axis
+ * @param {string[]} aspects The names of the neighborhoods // les  aspects à comparer
+ * @param {number} height The height of the diagram
+ */
+
+
+function updateYScaleV3(yScale, aspects, height) {
+  // TODO : Update Y scale
+  // Make sure to sort the neighborhood names alphabetically
+  yScale.range([0, height]);
+  yScale.domain(aspects); // les  aspects à comparer
+}
+/**
+ *  Draws the X axis at the top of the diagram.
+ *
+ *  @param {*} xScale The scale to use to draw the axis
+ */
+
+
+function drawXAxisV3(xScale) {
+  // TODO : Draw X axis
+  d3.select('.main-svg3').select('.x.axis').call(d3.axisTop(xScale));
+}
+/**
+ * Draws the Y axis to the right of the diagram.
+ *
+ * @param {*} yScale The scale to use to draw the axis
+ * @param {number} width The width of the graphic
+ */
+
+
+function drawYAxisV3(yScale, width) {
+  // TODO : Draw Y axis
+  d3.select('.main-svg3').select('.y.axis').call(d3.axisRight(yScale)).attr('transform', "translate(".concat(width, ",0)"));
+}
+/**
+ * Rotates the ticks on the X axis 45 degrees towards the left.
+ */
+
+
+function rotateXTicksV3() {
+  // TODO : Rotate X axis' ticks
+  d3.select('.main-svg3').select('.x.axis').selectAll('.tick').selectAll('text').attr('transform', 'rotate(-45)');
+}
+/**
+ * After the rectangles have been appended, this function dictates
+ * their position, size and fill color.
+ *
+ * @param {*} xScale The x scale used to position the rectangles
+ * @param {*} yScale The y scale used to position the rectangles
+ * @param {*} colorScale The color scale used to set the rectangles' colors
+ */
+
+
+function updateRectsV3(xScale, yScale, colorScale) {
+  // TODO : Set position, size and fill of rectangles according to bound data
+  d3.selectAll('.element').attr('transform', function (d) {
+    return "translate(".concat(xScale(d.Players), ",").concat(yScale(d.Aspects), ")");
+  }) // the d  name and the aspects
+  .selectAll('rect').attr('width', xScale.bandwidth()).attr('height', yScale.bandwidth()).attr('fill', function (d) {
+    return colorScale(d.Counts);
+  });
+}
 },{}],"scripts/preprocess.js":[function(require,module,exports) {
 "use strict";
 
@@ -347,6 +497,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.convertCoordinates = convertCoordinates;
 exports.simplifyDisplayTitles = simplifyDisplayTitles;
+exports.summarizeLinesV3 = summarizeLinesV3;
+exports.arrangeV3 = arrangeV3;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -414,6 +574,89 @@ function simplifyDisplayTitles(data) {
   data.features.forEach(function (feature) {
     feature.properties.TYPE_SITE_INTERVENTION = TITLES[feature.properties.TYPE_SITE_INTERVENTION];
   });
+}
+
+function summarizeLinesV3(data) {
+  // TODO : Generate the data structure as defined above
+  // class by players, get all the players
+  var getPlayers = _toConsumableArray(new Set(data.map(function (row) {
+    return parseInt(row.ID);
+  }))).sort(function (a, b) {
+    return a - b;
+  }); // return the structure
+
+
+  return getPlayers.map(function (player) {
+    return {
+      Player: player,
+      Tkl: countGoalV3(data.filter(function (row) {
+        return parseInt(row.ID) === player;
+      }))[0],
+      Ast: countGoalV3(data.filter(function (row) {
+        return parseInt(row.ID) === player;
+      }))[1],
+      Gls: countGoalV3(data.filter(function (row) {
+        return parseInt(row.ID) === player;
+      }))[2],
+      Succ: countGoalV3(data.filter(function (row) {
+        return parseInt(row.ID) === player;
+      }))[3],
+      Int: countGoalV3(data.filter(function (row) {
+        return parseInt(row.ID) === player;
+      }))[4]
+    };
+  }).filter(function (elt) {
+    return elt.Count !== 0;
+  });
+}
+
+function arrangeV3(tabtemp) {
+  var tableResult = [];
+  var players = ['Mbappe', 'Benzema', 'Mane'];
+  var aspects = ['Tkl', 'Ast', 'Gls', 'Succ', 'Int'];
+  var indexplayer = -1;
+  players.forEach(function (player) {
+    indexplayer += 1;
+    aspects.forEach(function (aspect) {
+      tableResult.push({
+        "Players": player,
+        "Aspects": aspect,
+        "Counts": tabtemp[indexplayer][aspect]
+      });
+    });
+  });
+  return tableResult;
+}
+
+function countGoalV3(temps) {
+  var tempTkl = 0;
+  var tempAst = 0;
+  var tempGls = 0;
+  var tempSucc = 0;
+  var tempInt = 0;
+  temps.forEach(function (row) {
+    if (row.Tkl != null) {
+      tempTkl += parseInt(row.Tkl);
+    }
+
+    if (row.Ast != null) {
+      tempAst += parseInt(row.Ast);
+    }
+
+    if (row.Gls != null) {
+      tempGls += parseInt(row.Gls);
+    }
+
+    if (row.Succ != null) {
+      tempSucc += parseInt(row.Succ);
+    }
+
+    if (row.Int != null) {
+      tempInt += parseInt(row.Int);
+    }
+  });
+  var temp = [tempTkl, tempAst, tempGls, tempSucc, tempInt];
+  return temp;
 }
 },{}],"../node_modules/d3-svg-legend/node_modules/d3-selection/src/namespaces.js":[function(require,module,exports) {
 "use strict";
@@ -10008,6 +10251,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.drawLegend = drawLegend;
+exports.initGradientV3 = initGradientV3;
+exports.initLegendBarV3 = initLegendBarV3;
+exports.initLegendAxisV3 = initLegendAxisV3;
+exports.drawV3 = drawV3;
 
 var _d3SvgLegend = _interopRequireDefault(require("d3-svg-legend"));
 
@@ -10037,6 +10284,65 @@ function drawLegend(colorScale, g) {// TODO : Generate the legend
          .shapePadding(2)
          .scale(colorScale)
      )*/
+}
+/**
+ * Initializes the definition for the gradient to use with the
+ * given colorScale.
+ *
+ * @param {*} colorScale The color scale to use
+ */
+
+
+function initGradientV3(colorScale) {
+  var svg = d3.select('.main-svg3');
+  var defs = svg.append('defs');
+  var linearGradient = defs.append('linearGradient').attr('id', 'gradient').attr('x1', 0).attr('y1', 1).attr('x2', 0).attr('y2', 0);
+  linearGradient.selectAll('stop').data(colorScale.ticks().map(function (tick, i, nodes) {
+    return {
+      offset: "".concat(100 * (i / nodes.length), "%"),
+      color: colorScale(tick)
+    };
+  })).join('stop').attr('offset', function (d) {
+    return d.offset;
+  }).attr('stop-color', function (d) {
+    return d.color;
+  });
+}
+/**
+ * Initializes the SVG rectangle for the legend.
+ */
+
+
+function initLegendBarV3() {
+  var svg = d3.select('.main-svg3');
+  svg.append('rect').attr('class', 'legend bar');
+}
+/**
+ *  Initializes the group for the legend's axis.
+ */
+
+
+function initLegendAxisV3() {
+  var svg = d3.select('.main-svg3');
+  svg.append('g').attr('class', 'legend axis');
+}
+/**
+ * Draws the legend to the left of the graphic.
+ *
+ * @param {number} x The x position of the legend
+ * @param {number} y The y position of the legend
+ * @param {number} height The height of the legend
+ * @param {number} width The width of the legend
+ * @param {string} fill The fill of the legend
+ * @param {*} colorScale The color scale represented by the legend
+ */
+
+
+function drawV3(x, y, height, width, fill, colorScale) {
+  // TODO : Draw the legend
+  d3.select('.main-svg3 .legend.bar').attr('width', width).attr('height', height).attr('x', x).attr('y', y).attr('fill', fill);
+  var axis = d3.axisLeft(d3.scaleLinear().domain(colorScale.domain()).range([height, 0])).ticks(7);
+  d3.select('.main-svg3 .legend.axis').attr('transform', "translate(".concat(x, ", ").concat(y, ")")).call(axis);
 }
 },{"d3-svg-legend":"../node_modules/d3-svg-legend/indexRollupNext.js"}],"scripts/panel.js":[function(require,module,exports) {
 "use strict";
@@ -10110,7 +10416,1493 @@ function setTheme(g, d) {
   // TODO : Append a list element representing the given theme
   g.append("li").text(d);
 }
-},{}],"index.js":[function(require,module,exports) {
+},{}],"scripts/hover.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setRectHandlerV3 = setRectHandlerV3;
+exports.rectSelectedV3 = rectSelectedV3;
+exports.rectUnselectedV3 = rectUnselectedV3;
+exports.selectTicksV3 = selectTicksV3;
+exports.unselectTicksV3 = unselectTicksV3;
+
+/**
+ * Sets up an event handler for when the mouse enters and leaves the squares
+ * in the heatmap. When the square is hovered, it enters the "selected" state.
+ *
+ * The tick labels for the year and neighborhood corresponding to the square appear
+ * in bold.
+ *
+ * @param {*} xScale The xScale to be used when placing the text in the square
+ * @param {*} yScale The yScale to be used when placing the text in the square
+ * @param {Function} rectSelected The function to call to set the mode to "selected" on the square
+ * @param {Function} rectUnselected The function to call to remove "selected" mode from the square
+ * @param {Function} selectTicks The function to call to set the mode to "selected" on the ticks
+ * @param {Function} unselectTicks The function to call to remove "selected" mode from the ticks
+ */
+function setRectHandlerV3(xScale, yScale, rectSelected, rectUnselected, selectTicks, unselectTicks) {
+  // TODO : Select the squares and set their event handlers
+  d3.selectAll('.element').on('mouseenter', function (elt) {
+    rectSelected(this, xScale, yScale);
+    selectTicks(elt["Aspects"], elt["Players"]); // name and aspect
+  }).on('mouseleave', function (elem) {
+    rectUnselected(this);
+    unselectTicks();
+  });
+}
+/**
+ * The function to be called when one or many rectangles are in "selected" state,
+ * meaning they are being hovered
+ *
+ * The text representing the number of trees associated to the rectangle
+ * is displayed in the center of the rectangle and their opacity is lowered to 75%.
+ *
+ * @param {*} element The selection of rectangles in "selected" state
+ * @param {*} xScale The xScale to be used when placing the text in the square
+ * @param {*} yScale The yScale to be used when placing the text in the square
+ */
+
+
+function rectSelectedV3(element, xScale, yScale) {
+  // TODO : Display the number of trees on the selected element
+  // Make sure the nimber is centered. If there are 1000 or more
+  // trees, display the text in white so it contrasts with the background.
+  d3.select(element).append('text').text(function (elt) {
+    return elt["Counts"];
+  }).attr('fill', function (elt) {
+    return elt["Counts"] < 100 ? 'black' : 'white';
+  }).attr('opacity', 0.75).attr('x', function (elt) {
+    return (xScale.bandwidth() - 10 * elt["Counts"].toString().length) / 2;
+  }).attr('y', function (elt) {
+    return (yScale.bandwidth() + 10) / 2;
+  });
+}
+/**
+ * The function to be called when the rectangle or group
+ * of rectangles is no longer in "selected state".
+ *
+ * The text indicating the number of trees is removed and
+ * the opacity returns to 100%.
+ *
+ * @param {*} element The selection of rectangles in "selected" state
+ */
+
+
+function rectUnselectedV3(element) {
+  // TODO : Unselect the element
+  d3.select(element).attr('opacity', 1.0).select('text').remove();
+}
+/**
+ * Makes the font weight of the ticks texts with the given name and year bold.
+ *
+ * @param {string} name The name of the neighborhood associated with the tick text to make bold
+ * @param {number} year The year associated with the tick text to make bold
+ */
+
+
+function selectTicksV3(name, year) {
+  // player and aspect
+  // TODO : Make the ticks bold
+  d3.selectAll('.tick').filter(function (content) {
+    return content == name || content == year;
+  }).attr('font-weight', 'bolder');
+}
+/**
+ * Returns the font weight of all ticks to normal.
+ */
+
+
+function unselectTicksV3() {
+  // TODO : Unselect the ticks
+  d3.selectAll('.tick').attr('font-weight', 'normal');
+}
+},{}],"../node_modules/d3-scale-chromatic/src/colors.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(specifier) {
+  var n = specifier.length / 6 | 0,
+      colors = new Array(n),
+      i = 0;
+
+  while (i < n) colors[i] = "#" + specifier.slice(i * 6, ++i * 6);
+
+  return colors;
+}
+},{}],"../node_modules/d3-scale-chromatic/src/categorical/category10.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("1f77b4ff7f0e2ca02cd627289467bd8c564be377c27f7f7fbcbd2217becf");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Accent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("7fc97fbeaed4fdc086ffff99386cb0f0027fbf5b17666666");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Dark2.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("1b9e77d95f027570b3e7298a66a61ee6ab02a6761d666666");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Paired.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("a6cee31f78b4b2df8a33a02cfb9a99e31a1cfdbf6fff7f00cab2d66a3d9affff99b15928");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Pastel1.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("fbb4aeb3cde3ccebc5decbe4fed9a6ffffcce5d8bdfddaecf2f2f2");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Pastel2.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("b3e2cdfdcdaccbd5e8f4cae4e6f5c9fff2aef1e2cccccccc");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Set1.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("e41a1c377eb84daf4a984ea3ff7f00ffff33a65628f781bf999999");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Set2.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("66c2a5fc8d628da0cbe78ac3a6d854ffd92fe5c494b3b3b3");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Set3.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/categorical/Tableau10.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _colors.default)("4e79a7f28e2ce1575976b7b259a14fedc949af7aa1ff9da79c755fbab0ab");
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/ramp.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _d3Interpolate = require("d3-interpolate");
+
+function _default(scheme) {
+  return (0, _d3Interpolate.interpolateRgbBasis)(scheme[scheme.length - 1]);
+}
+},{"d3-interpolate":"../node_modules/d3-interpolate/src/index.js"}],"../node_modules/d3-scale-chromatic/src/diverging/BrBG.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("d8b365f5f5f55ab4ac", "a6611adfc27d80cdc1018571", "a6611adfc27df5f5f580cdc1018571", "8c510ad8b365f6e8c3c7eae55ab4ac01665e", "8c510ad8b365f6e8c3f5f5f5c7eae55ab4ac01665e", "8c510abf812ddfc27df6e8c3c7eae580cdc135978f01665e", "8c510abf812ddfc27df6e8c3f5f5f5c7eae580cdc135978f01665e", "5430058c510abf812ddfc27df6e8c3c7eae580cdc135978f01665e003c30", "5430058c510abf812ddfc27df6e8c3f5f5f5c7eae580cdc135978f01665e003c30").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/PRGn.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("af8dc3f7f7f77fbf7b", "7b3294c2a5cfa6dba0008837", "7b3294c2a5cff7f7f7a6dba0008837", "762a83af8dc3e7d4e8d9f0d37fbf7b1b7837", "762a83af8dc3e7d4e8f7f7f7d9f0d37fbf7b1b7837", "762a839970abc2a5cfe7d4e8d9f0d3a6dba05aae611b7837", "762a839970abc2a5cfe7d4e8f7f7f7d9f0d3a6dba05aae611b7837", "40004b762a839970abc2a5cfe7d4e8d9f0d3a6dba05aae611b783700441b", "40004b762a839970abc2a5cfe7d4e8f7f7f7d9f0d3a6dba05aae611b783700441b").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/PiYG.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e9a3c9f7f7f7a1d76a", "d01c8bf1b6dab8e1864dac26", "d01c8bf1b6daf7f7f7b8e1864dac26", "c51b7de9a3c9fde0efe6f5d0a1d76a4d9221", "c51b7de9a3c9fde0eff7f7f7e6f5d0a1d76a4d9221", "c51b7dde77aef1b6dafde0efe6f5d0b8e1867fbc414d9221", "c51b7dde77aef1b6dafde0eff7f7f7e6f5d0b8e1867fbc414d9221", "8e0152c51b7dde77aef1b6dafde0efe6f5d0b8e1867fbc414d9221276419", "8e0152c51b7dde77aef1b6dafde0eff7f7f7e6f5d0b8e1867fbc414d9221276419").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/PuOr.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("998ec3f7f7f7f1a340", "5e3c99b2abd2fdb863e66101", "5e3c99b2abd2f7f7f7fdb863e66101", "542788998ec3d8daebfee0b6f1a340b35806", "542788998ec3d8daebf7f7f7fee0b6f1a340b35806", "5427888073acb2abd2d8daebfee0b6fdb863e08214b35806", "5427888073acb2abd2d8daebf7f7f7fee0b6fdb863e08214b35806", "2d004b5427888073acb2abd2d8daebfee0b6fdb863e08214b358067f3b08", "2d004b5427888073acb2abd2d8daebf7f7f7fee0b6fdb863e08214b358067f3b08").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/RdBu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("ef8a62f7f7f767a9cf", "ca0020f4a58292c5de0571b0", "ca0020f4a582f7f7f792c5de0571b0", "b2182bef8a62fddbc7d1e5f067a9cf2166ac", "b2182bef8a62fddbc7f7f7f7d1e5f067a9cf2166ac", "b2182bd6604df4a582fddbc7d1e5f092c5de4393c32166ac", "b2182bd6604df4a582fddbc7f7f7f7d1e5f092c5de4393c32166ac", "67001fb2182bd6604df4a582fddbc7d1e5f092c5de4393c32166ac053061", "67001fb2182bd6604df4a582fddbc7f7f7f7d1e5f092c5de4393c32166ac053061").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/RdGy.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("ef8a62ffffff999999", "ca0020f4a582bababa404040", "ca0020f4a582ffffffbababa404040", "b2182bef8a62fddbc7e0e0e09999994d4d4d", "b2182bef8a62fddbc7ffffffe0e0e09999994d4d4d", "b2182bd6604df4a582fddbc7e0e0e0bababa8787874d4d4d", "b2182bd6604df4a582fddbc7ffffffe0e0e0bababa8787874d4d4d", "67001fb2182bd6604df4a582fddbc7e0e0e0bababa8787874d4d4d1a1a1a", "67001fb2182bd6604df4a582fddbc7ffffffe0e0e0bababa8787874d4d4d1a1a1a").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/RdYlBu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fc8d59ffffbf91bfdb", "d7191cfdae61abd9e92c7bb6", "d7191cfdae61ffffbfabd9e92c7bb6", "d73027fc8d59fee090e0f3f891bfdb4575b4", "d73027fc8d59fee090ffffbfe0f3f891bfdb4575b4", "d73027f46d43fdae61fee090e0f3f8abd9e974add14575b4", "d73027f46d43fdae61fee090ffffbfe0f3f8abd9e974add14575b4", "a50026d73027f46d43fdae61fee090e0f3f8abd9e974add14575b4313695", "a50026d73027f46d43fdae61fee090ffffbfe0f3f8abd9e974add14575b4313695").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/RdYlGn.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fc8d59ffffbf91cf60", "d7191cfdae61a6d96a1a9641", "d7191cfdae61ffffbfa6d96a1a9641", "d73027fc8d59fee08bd9ef8b91cf601a9850", "d73027fc8d59fee08bffffbfd9ef8b91cf601a9850", "d73027f46d43fdae61fee08bd9ef8ba6d96a66bd631a9850", "d73027f46d43fdae61fee08bffffbfd9ef8ba6d96a66bd631a9850", "a50026d73027f46d43fdae61fee08bd9ef8ba6d96a66bd631a9850006837", "a50026d73027f46d43fdae61fee08bffffbfd9ef8ba6d96a66bd631a9850006837").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/diverging/Spectral.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fc8d59ffffbf99d594", "d7191cfdae61abdda42b83ba", "d7191cfdae61ffffbfabdda42b83ba", "d53e4ffc8d59fee08be6f59899d5943288bd", "d53e4ffc8d59fee08bffffbfe6f59899d5943288bd", "d53e4ff46d43fdae61fee08be6f598abdda466c2a53288bd", "d53e4ff46d43fdae61fee08bffffbfe6f598abdda466c2a53288bd", "9e0142d53e4ff46d43fdae61fee08be6f598abdda466c2a53288bd5e4fa2", "9e0142d53e4ff46d43fdae61fee08bffffbfe6f598abdda466c2a53288bd5e4fa2").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/BuGn.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e5f5f999d8c92ca25f", "edf8fbb2e2e266c2a4238b45", "edf8fbb2e2e266c2a42ca25f006d2c", "edf8fbccece699d8c966c2a42ca25f006d2c", "edf8fbccece699d8c966c2a441ae76238b45005824", "f7fcfde5f5f9ccece699d8c966c2a441ae76238b45005824", "f7fcfde5f5f9ccece699d8c966c2a441ae76238b45006d2c00441b").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/BuPu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e0ecf49ebcda8856a7", "edf8fbb3cde38c96c688419d", "edf8fbb3cde38c96c68856a7810f7c", "edf8fbbfd3e69ebcda8c96c68856a7810f7c", "edf8fbbfd3e69ebcda8c96c68c6bb188419d6e016b", "f7fcfde0ecf4bfd3e69ebcda8c96c68c6bb188419d6e016b", "f7fcfde0ecf4bfd3e69ebcda8c96c68c6bb188419d810f7c4d004b").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/GnBu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e0f3dba8ddb543a2ca", "f0f9e8bae4bc7bccc42b8cbe", "f0f9e8bae4bc7bccc443a2ca0868ac", "f0f9e8ccebc5a8ddb57bccc443a2ca0868ac", "f0f9e8ccebc5a8ddb57bccc44eb3d32b8cbe08589e", "f7fcf0e0f3dbccebc5a8ddb57bccc44eb3d32b8cbe08589e", "f7fcf0e0f3dbccebc5a8ddb57bccc44eb3d32b8cbe0868ac084081").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/OrRd.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fee8c8fdbb84e34a33", "fef0d9fdcc8afc8d59d7301f", "fef0d9fdcc8afc8d59e34a33b30000", "fef0d9fdd49efdbb84fc8d59e34a33b30000", "fef0d9fdd49efdbb84fc8d59ef6548d7301f990000", "fff7ecfee8c8fdd49efdbb84fc8d59ef6548d7301f990000", "fff7ecfee8c8fdd49efdbb84fc8d59ef6548d7301fb300007f0000").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/PuBuGn.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("ece2f0a6bddb1c9099", "f6eff7bdc9e167a9cf02818a", "f6eff7bdc9e167a9cf1c9099016c59", "f6eff7d0d1e6a6bddb67a9cf1c9099016c59", "f6eff7d0d1e6a6bddb67a9cf3690c002818a016450", "fff7fbece2f0d0d1e6a6bddb67a9cf3690c002818a016450", "fff7fbece2f0d0d1e6a6bddb67a9cf3690c002818a016c59014636").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/PuBu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("ece7f2a6bddb2b8cbe", "f1eef6bdc9e174a9cf0570b0", "f1eef6bdc9e174a9cf2b8cbe045a8d", "f1eef6d0d1e6a6bddb74a9cf2b8cbe045a8d", "f1eef6d0d1e6a6bddb74a9cf3690c00570b0034e7b", "fff7fbece7f2d0d1e6a6bddb74a9cf3690c00570b0034e7b", "fff7fbece7f2d0d1e6a6bddb74a9cf3690c00570b0045a8d023858").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/PuRd.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e7e1efc994c7dd1c77", "f1eef6d7b5d8df65b0ce1256", "f1eef6d7b5d8df65b0dd1c77980043", "f1eef6d4b9dac994c7df65b0dd1c77980043", "f1eef6d4b9dac994c7df65b0e7298ace125691003f", "f7f4f9e7e1efd4b9dac994c7df65b0e7298ace125691003f", "f7f4f9e7e1efd4b9dac994c7df65b0e7298ace125698004367001f").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/RdPu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fde0ddfa9fb5c51b8a", "feebe2fbb4b9f768a1ae017e", "feebe2fbb4b9f768a1c51b8a7a0177", "feebe2fcc5c0fa9fb5f768a1c51b8a7a0177", "feebe2fcc5c0fa9fb5f768a1dd3497ae017e7a0177", "fff7f3fde0ddfcc5c0fa9fb5f768a1dd3497ae017e7a0177", "fff7f3fde0ddfcc5c0fa9fb5f768a1dd3497ae017e7a017749006a").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/YlGnBu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("edf8b17fcdbb2c7fb8", "ffffcca1dab441b6c4225ea8", "ffffcca1dab441b6c42c7fb8253494", "ffffccc7e9b47fcdbb41b6c42c7fb8253494", "ffffccc7e9b47fcdbb41b6c41d91c0225ea80c2c84", "ffffd9edf8b1c7e9b47fcdbb41b6c41d91c0225ea80c2c84", "ffffd9edf8b1c7e9b47fcdbb41b6c41d91c0225ea8253494081d58").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/YlGn.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("f7fcb9addd8e31a354", "ffffccc2e69978c679238443", "ffffccc2e69978c67931a354006837", "ffffccd9f0a3addd8e78c67931a354006837", "ffffccd9f0a3addd8e78c67941ab5d238443005a32", "ffffe5f7fcb9d9f0a3addd8e78c67941ab5d238443005a32", "ffffe5f7fcb9d9f0a3addd8e78c67941ab5d238443006837004529").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/YlOrBr.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fff7bcfec44fd95f0e", "ffffd4fed98efe9929cc4c02", "ffffd4fed98efe9929d95f0e993404", "ffffd4fee391fec44ffe9929d95f0e993404", "ffffd4fee391fec44ffe9929ec7014cc4c028c2d04", "ffffe5fff7bcfee391fec44ffe9929ec7014cc4c028c2d04", "ffffe5fff7bcfee391fec44ffe9929ec7014cc4c02993404662506").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/YlOrRd.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("ffeda0feb24cf03b20", "ffffb2fecc5cfd8d3ce31a1c", "ffffb2fecc5cfd8d3cf03b20bd0026", "ffffb2fed976feb24cfd8d3cf03b20bd0026", "ffffb2fed976feb24cfd8d3cfc4e2ae31a1cb10026", "ffffccffeda0fed976feb24cfd8d3cfc4e2ae31a1cb10026", "ffffccffeda0fed976feb24cfd8d3cfc4e2ae31a1cbd0026800026").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Blues.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("deebf79ecae13182bd", "eff3ffbdd7e76baed62171b5", "eff3ffbdd7e76baed63182bd08519c", "eff3ffc6dbef9ecae16baed63182bd08519c", "eff3ffc6dbef9ecae16baed64292c62171b5084594", "f7fbffdeebf7c6dbef9ecae16baed64292c62171b5084594", "f7fbffdeebf7c6dbef9ecae16baed64292c62171b508519c08306b").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Greens.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("e5f5e0a1d99b31a354", "edf8e9bae4b374c476238b45", "edf8e9bae4b374c47631a354006d2c", "edf8e9c7e9c0a1d99b74c47631a354006d2c", "edf8e9c7e9c0a1d99b74c47641ab5d238b45005a32", "f7fcf5e5f5e0c7e9c0a1d99b74c47641ab5d238b45005a32", "f7fcf5e5f5e0c7e9c0a1d99b74c47641ab5d238b45006d2c00441b").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Greys.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("f0f0f0bdbdbd636363", "f7f7f7cccccc969696525252", "f7f7f7cccccc969696636363252525", "f7f7f7d9d9d9bdbdbd969696636363252525", "f7f7f7d9d9d9bdbdbd969696737373525252252525", "fffffff0f0f0d9d9d9bdbdbd969696737373525252252525", "fffffff0f0f0d9d9d9bdbdbd969696737373525252252525000000").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Purples.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("efedf5bcbddc756bb1", "f2f0f7cbc9e29e9ac86a51a3", "f2f0f7cbc9e29e9ac8756bb154278f", "f2f0f7dadaebbcbddc9e9ac8756bb154278f", "f2f0f7dadaebbcbddc9e9ac8807dba6a51a34a1486", "fcfbfdefedf5dadaebbcbddc9e9ac8807dba6a51a34a1486", "fcfbfdefedf5dadaebbcbddc9e9ac8807dba6a51a354278f3f007d").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Reds.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fee0d2fc9272de2d26", "fee5d9fcae91fb6a4acb181d", "fee5d9fcae91fb6a4ade2d26a50f15", "fee5d9fcbba1fc9272fb6a4ade2d26a50f15", "fee5d9fcbba1fc9272fb6a4aef3b2ccb181d99000d", "fff5f0fee0d2fcbba1fc9272fb6a4aef3b2ccb181d99000d", "fff5f0fee0d2fcbba1fc9272fb6a4aef3b2ccb181da50f1567000d").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-single/Oranges.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.scheme = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+var _ramp = _interopRequireDefault(require("../ramp.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scheme = new Array(3).concat("fee6cefdae6be6550d", "feeddefdbe85fd8d3cd94701", "feeddefdbe85fd8d3ce6550da63603", "feeddefdd0a2fdae6bfd8d3ce6550da63603", "feeddefdd0a2fdae6bfd8d3cf16913d948018c2d04", "fff5ebfee6cefdd0a2fdae6bfd8d3cf16913d948018c2d04", "fff5ebfee6cefdd0a2fdae6bfd8d3cf16913d94801a636037f2704").map(_colors.default);
+exports.scheme = scheme;
+
+var _default = (0, _ramp.default)(scheme);
+
+exports.default = _default;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js","../ramp.js":"../node_modules/d3-scale-chromatic/src/ramp.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/cividis.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(t) {
+  t = Math.max(0, Math.min(1, t));
+  return "rgb(" + Math.max(0, Math.min(255, Math.round(-4.54 - t * (35.34 - t * (2381.73 - t * (6402.7 - t * (7024.72 - t * 2710.57))))))) + ", " + Math.max(0, Math.min(255, Math.round(32.49 + t * (170.73 + t * (52.82 - t * (131.46 - t * (176.58 - t * 67.37))))))) + ", " + Math.max(0, Math.min(255, Math.round(81.24 + t * (442.36 - t * (2482.43 - t * (6167.24 - t * (6614.94 - t * 2475.67))))))) + ")";
+}
+},{}],"../node_modules/d3-scale-chromatic/src/sequential-multi/cubehelix.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _d3Color = require("d3-color");
+
+var _d3Interpolate = require("d3-interpolate");
+
+var _default = (0, _d3Interpolate.interpolateCubehelixLong)((0, _d3Color.cubehelix)(300, 0.5, 0.0), (0, _d3Color.cubehelix)(-240, 0.5, 1.0));
+
+exports.default = _default;
+},{"d3-color":"../node_modules/d3-color/src/index.js","d3-interpolate":"../node_modules/d3-interpolate/src/index.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/rainbow.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+exports.cool = exports.warm = void 0;
+
+var _d3Color = require("d3-color");
+
+var _d3Interpolate = require("d3-interpolate");
+
+var warm = (0, _d3Interpolate.interpolateCubehelixLong)((0, _d3Color.cubehelix)(-100, 0.75, 0.35), (0, _d3Color.cubehelix)(80, 1.50, 0.8));
+exports.warm = warm;
+var cool = (0, _d3Interpolate.interpolateCubehelixLong)((0, _d3Color.cubehelix)(260, 0.75, 0.35), (0, _d3Color.cubehelix)(80, 1.50, 0.8));
+exports.cool = cool;
+var c = (0, _d3Color.cubehelix)();
+
+function _default(t) {
+  if (t < 0 || t > 1) t -= Math.floor(t);
+  var ts = Math.abs(t - 0.5);
+  c.h = 360 * t - 100;
+  c.s = 1.5 - 1.5 * ts;
+  c.l = 0.8 - 0.9 * ts;
+  return c + "";
+}
+},{"d3-color":"../node_modules/d3-color/src/index.js","d3-interpolate":"../node_modules/d3-interpolate/src/index.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/sinebow.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _d3Color = require("d3-color");
+
+var c = (0, _d3Color.rgb)(),
+    pi_1_3 = Math.PI / 3,
+    pi_2_3 = Math.PI * 2 / 3;
+
+function _default(t) {
+  var x;
+  t = (0.5 - t) * Math.PI;
+  c.r = 255 * (x = Math.sin(t)) * x;
+  c.g = 255 * (x = Math.sin(t + pi_1_3)) * x;
+  c.b = 255 * (x = Math.sin(t + pi_2_3)) * x;
+  return c + "";
+}
+},{"d3-color":"../node_modules/d3-color/src/index.js"}],"../node_modules/d3-scale-chromatic/src/sequential-multi/turbo.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(t) {
+  t = Math.max(0, Math.min(1, t));
+  return "rgb(" + Math.max(0, Math.min(255, Math.round(34.61 + t * (1172.33 - t * (10793.56 - t * (33300.12 - t * (38394.49 - t * 14825.05))))))) + ", " + Math.max(0, Math.min(255, Math.round(23.31 + t * (557.33 + t * (1225.33 - t * (3574.96 - t * (1073.77 + t * 707.56))))))) + ", " + Math.max(0, Math.min(255, Math.round(27.2 + t * (3211.1 - t * (15327.97 - t * (27814 - t * (22569.18 - t * 6838.66))))))) + ")";
+}
+},{}],"../node_modules/d3-scale-chromatic/src/sequential-multi/viridis.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.plasma = exports.inferno = exports.magma = exports.default = void 0;
+
+var _colors = _interopRequireDefault(require("../colors.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ramp(range) {
+  var n = range.length;
+  return function (t) {
+    return range[Math.max(0, Math.min(n - 1, Math.floor(t * n)))];
+  };
+}
+
+var _default = ramp((0, _colors.default)("44015444025645045745055946075a46085c460a5d460b5e470d60470e6147106347116447136548146748166848176948186a481a6c481b6d481c6e481d6f481f70482071482173482374482475482576482677482878482979472a7a472c7a472d7b472e7c472f7d46307e46327e46337f463480453581453781453882443983443a83443b84433d84433e85423f854240864241864142874144874045884046883f47883f48893e49893e4a893e4c8a3d4d8a3d4e8a3c4f8a3c508b3b518b3b528b3a538b3a548c39558c39568c38588c38598c375a8c375b8d365c8d365d8d355e8d355f8d34608d34618d33628d33638d32648e32658e31668e31678e31688e30698e306a8e2f6b8e2f6c8e2e6d8e2e6e8e2e6f8e2d708e2d718e2c718e2c728e2c738e2b748e2b758e2a768e2a778e2a788e29798e297a8e297b8e287c8e287d8e277e8e277f8e27808e26818e26828e26828e25838e25848e25858e24868e24878e23888e23898e238a8d228b8d228c8d228d8d218e8d218f8d21908d21918c20928c20928c20938c1f948c1f958b1f968b1f978b1f988b1f998a1f9a8a1e9b8a1e9c891e9d891f9e891f9f881fa0881fa1881fa1871fa28720a38620a48621a58521a68522a78522a88423a98324aa8325ab8225ac8226ad8127ad8128ae8029af7f2ab07f2cb17e2db27d2eb37c2fb47c31b57b32b67a34b67935b77937b87838b9773aba763bbb753dbc743fbc7340bd7242be7144bf7046c06f48c16e4ac16d4cc26c4ec36b50c46a52c56954c56856c66758c7655ac8645cc8635ec96260ca6063cb5f65cb5e67cc5c69cd5b6ccd5a6ece5870cf5773d05675d05477d1537ad1517cd2507fd34e81d34d84d44b86d54989d5488bd6468ed64590d74393d74195d84098d83e9bd93c9dd93ba0da39a2da37a5db36a8db34aadc32addc30b0dd2fb2dd2db5de2bb8de29bade28bddf26c0df25c2df23c5e021c8e020cae11fcde11dd0e11cd2e21bd5e21ad8e219dae319dde318dfe318e2e418e5e419e7e419eae51aece51befe51cf1e51df4e61ef6e620f8e621fbe723fde725"));
+
+exports.default = _default;
+var magma = ramp((0, _colors.default)("00000401000501010601010802010902020b02020d03030f03031204041405041606051806051a07061c08071e0907200a08220b09240c09260d0a290e0b2b100b2d110c2f120d31130d34140e36150e38160f3b180f3d19103f1a10421c10441d11471e114920114b21114e22115024125325125527125829115a2a115c2c115f2d11612f116331116533106734106936106b38106c390f6e3b0f703d0f713f0f72400f74420f75440f764510774710784910784a10794c117a4e117b4f127b51127c52137c54137d56147d57157e59157e5a167e5c167f5d177f5f187f601880621980641a80651a80671b80681c816a1c816b1d816d1d816e1e81701f81721f817320817521817621817822817922827b23827c23827e24828025828125818326818426818627818827818928818b29818c29818e2a81902a81912b81932b80942c80962c80982d80992d809b2e7f9c2e7f9e2f7fa02f7fa1307ea3307ea5317ea6317da8327daa337dab337cad347cae347bb0357bb2357bb3367ab5367ab73779b83779ba3878bc3978bd3977bf3a77c03a76c23b75c43c75c53c74c73d73c83e73ca3e72cc3f71cd4071cf4070d0416fd2426fd3436ed5446dd6456cd8456cd9466bdb476adc4869de4968df4a68e04c67e24d66e34e65e44f64e55064e75263e85362e95462ea5661eb5760ec5860ed5a5fee5b5eef5d5ef05f5ef1605df2625df2645cf3655cf4675cf4695cf56b5cf66c5cf66e5cf7705cf7725cf8745cf8765cf9785df9795df97b5dfa7d5efa7f5efa815ffb835ffb8560fb8761fc8961fc8a62fc8c63fc8e64fc9065fd9266fd9467fd9668fd9869fd9a6afd9b6bfe9d6cfe9f6dfea16efea36ffea571fea772fea973feaa74feac76feae77feb078feb27afeb47bfeb67cfeb77efeb97ffebb81febd82febf84fec185fec287fec488fec68afec88cfeca8dfecc8ffecd90fecf92fed194fed395fed597fed799fed89afdda9cfddc9efddea0fde0a1fde2a3fde3a5fde5a7fde7a9fde9aafdebacfcecaefceeb0fcf0b2fcf2b4fcf4b6fcf6b8fcf7b9fcf9bbfcfbbdfcfdbf"));
+exports.magma = magma;
+var inferno = ramp((0, _colors.default)("00000401000501010601010802010a02020c02020e03021004031204031405041706041907051b08051d09061f0a07220b07240c08260d08290e092b10092d110a30120a32140b34150b37160b39180c3c190c3e1b0c411c0c431e0c451f0c48210c4a230c4c240c4f260c51280b53290b552b0b572d0b592f0a5b310a5c320a5e340a5f3609613809623909633b09643d09653e0966400a67420a68440a68450a69470b6a490b6a4a0c6b4c0c6b4d0d6c4f0d6c510e6c520e6d540f6d550f6d57106e59106e5a116e5c126e5d126e5f136e61136e62146e64156e65156e67166e69166e6a176e6c186e6d186e6f196e71196e721a6e741a6e751b6e771c6d781c6d7a1d6d7c1d6d7d1e6d7f1e6c801f6c82206c84206b85216b87216b88226a8a226a8c23698d23698f24699025689225689326679526679727669827669a28659b29649d29649f2a63a02a63a22b62a32c61a52c60a62d60a82e5fa92e5eab2f5ead305dae305cb0315bb1325ab3325ab43359b63458b73557b93556ba3655bc3754bd3853bf3952c03a51c13a50c33b4fc43c4ec63d4dc73e4cc83f4bca404acb4149cc4248ce4347cf4446d04545d24644d34743d44842d54a41d74b3fd84c3ed94d3dda4e3cdb503bdd513ade5238df5337e05536e15635e25734e35933e45a31e55c30e65d2fe75e2ee8602de9612bea632aeb6429eb6628ec6726ed6925ee6a24ef6c23ef6e21f06f20f1711ff1731df2741cf3761bf37819f47918f57b17f57d15f67e14f68013f78212f78410f8850ff8870ef8890cf98b0bf98c0af98e09fa9008fa9207fa9407fb9606fb9706fb9906fb9b06fb9d07fc9f07fca108fca309fca50afca60cfca80dfcaa0ffcac11fcae12fcb014fcb216fcb418fbb61afbb81dfbba1ffbbc21fbbe23fac026fac228fac42afac62df9c72ff9c932f9cb35f8cd37f8cf3af7d13df7d340f6d543f6d746f5d949f5db4cf4dd4ff4df53f4e156f3e35af3e55df2e661f2e865f2ea69f1ec6df1ed71f1ef75f1f179f2f27df2f482f3f586f3f68af4f88ef5f992f6fa96f8fb9af9fc9dfafda1fcffa4"));
+exports.inferno = inferno;
+var plasma = ramp((0, _colors.default)("0d088710078813078916078a19068c1b068d1d068e20068f2206902406912605912805922a05932c05942e05952f059631059733059735049837049938049a3a049a3c049b3e049c3f049c41049d43039e44039e46039f48039f4903a04b03a14c02a14e02a25002a25102a35302a35502a45601a45801a45901a55b01a55c01a65e01a66001a66100a76300a76400a76600a76700a86900a86a00a86c00a86e00a86f00a87100a87201a87401a87501a87701a87801a87a02a87b02a87d03a87e03a88004a88104a78305a78405a78606a68707a68808a68a09a58b0aa58d0ba58e0ca48f0da4910ea3920fa39410a29511a19613a19814a099159f9a169f9c179e9d189d9e199da01a9ca11b9ba21d9aa31e9aa51f99a62098a72197a82296aa2395ab2494ac2694ad2793ae2892b02991b12a90b22b8fb32c8eb42e8db52f8cb6308bb7318ab83289ba3388bb3488bc3587bd3786be3885bf3984c03a83c13b82c23c81c33d80c43e7fc5407ec6417dc7427cc8437bc9447aca457acb4679cc4778cc4977cd4a76ce4b75cf4c74d04d73d14e72d24f71d35171d45270d5536fd5546ed6556dd7566cd8576bd9586ada5a6ada5b69db5c68dc5d67dd5e66de5f65de6164df6263e06363e16462e26561e26660e3685fe4695ee56a5de56b5de66c5ce76e5be76f5ae87059e97158e97257ea7457eb7556eb7655ec7754ed7953ed7a52ee7b51ef7c51ef7e50f07f4ff0804ef1814df1834cf2844bf3854bf3874af48849f48948f58b47f58c46f68d45f68f44f79044f79143f79342f89441f89540f9973ff9983ef99a3efa9b3dfa9c3cfa9e3bfb9f3afba139fba238fca338fca537fca636fca835fca934fdab33fdac33fdae32fdaf31fdb130fdb22ffdb42ffdb52efeb72dfeb82cfeba2cfebb2bfebd2afebe2afec029fdc229fdc328fdc527fdc627fdc827fdca26fdcb26fccd25fcce25fcd025fcd225fbd324fbd524fbd724fad824fada24f9dc24f9dd25f8df25f8e125f7e225f7e425f6e626f6e826f5e926f5eb27f4ed27f3ee27f3f027f2f227f1f426f1f525f0f724f0f921"));
+exports.plasma = plasma;
+},{"../colors.js":"../node_modules/d3-scale-chromatic/src/colors.js"}],"../node_modules/d3-scale-chromatic/src/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "schemeCategory10", {
+  enumerable: true,
+  get: function () {
+    return _category.default;
+  }
+});
+Object.defineProperty(exports, "schemeAccent", {
+  enumerable: true,
+  get: function () {
+    return _Accent.default;
+  }
+});
+Object.defineProperty(exports, "schemeDark2", {
+  enumerable: true,
+  get: function () {
+    return _Dark.default;
+  }
+});
+Object.defineProperty(exports, "schemePaired", {
+  enumerable: true,
+  get: function () {
+    return _Paired.default;
+  }
+});
+Object.defineProperty(exports, "schemePastel1", {
+  enumerable: true,
+  get: function () {
+    return _Pastel.default;
+  }
+});
+Object.defineProperty(exports, "schemePastel2", {
+  enumerable: true,
+  get: function () {
+    return _Pastel2.default;
+  }
+});
+Object.defineProperty(exports, "schemeSet1", {
+  enumerable: true,
+  get: function () {
+    return _Set.default;
+  }
+});
+Object.defineProperty(exports, "schemeSet2", {
+  enumerable: true,
+  get: function () {
+    return _Set2.default;
+  }
+});
+Object.defineProperty(exports, "schemeSet3", {
+  enumerable: true,
+  get: function () {
+    return _Set3.default;
+  }
+});
+Object.defineProperty(exports, "schemeTableau10", {
+  enumerable: true,
+  get: function () {
+    return _Tableau.default;
+  }
+});
+Object.defineProperty(exports, "interpolateBrBG", {
+  enumerable: true,
+  get: function () {
+    return _BrBG.default;
+  }
+});
+Object.defineProperty(exports, "schemeBrBG", {
+  enumerable: true,
+  get: function () {
+    return _BrBG.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePRGn", {
+  enumerable: true,
+  get: function () {
+    return _PRGn.default;
+  }
+});
+Object.defineProperty(exports, "schemePRGn", {
+  enumerable: true,
+  get: function () {
+    return _PRGn.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePiYG", {
+  enumerable: true,
+  get: function () {
+    return _PiYG.default;
+  }
+});
+Object.defineProperty(exports, "schemePiYG", {
+  enumerable: true,
+  get: function () {
+    return _PiYG.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePuOr", {
+  enumerable: true,
+  get: function () {
+    return _PuOr.default;
+  }
+});
+Object.defineProperty(exports, "schemePuOr", {
+  enumerable: true,
+  get: function () {
+    return _PuOr.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateRdBu", {
+  enumerable: true,
+  get: function () {
+    return _RdBu.default;
+  }
+});
+Object.defineProperty(exports, "schemeRdBu", {
+  enumerable: true,
+  get: function () {
+    return _RdBu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateRdGy", {
+  enumerable: true,
+  get: function () {
+    return _RdGy.default;
+  }
+});
+Object.defineProperty(exports, "schemeRdGy", {
+  enumerable: true,
+  get: function () {
+    return _RdGy.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateRdYlBu", {
+  enumerable: true,
+  get: function () {
+    return _RdYlBu.default;
+  }
+});
+Object.defineProperty(exports, "schemeRdYlBu", {
+  enumerable: true,
+  get: function () {
+    return _RdYlBu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateRdYlGn", {
+  enumerable: true,
+  get: function () {
+    return _RdYlGn.default;
+  }
+});
+Object.defineProperty(exports, "schemeRdYlGn", {
+  enumerable: true,
+  get: function () {
+    return _RdYlGn.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateSpectral", {
+  enumerable: true,
+  get: function () {
+    return _Spectral.default;
+  }
+});
+Object.defineProperty(exports, "schemeSpectral", {
+  enumerable: true,
+  get: function () {
+    return _Spectral.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateBuGn", {
+  enumerable: true,
+  get: function () {
+    return _BuGn.default;
+  }
+});
+Object.defineProperty(exports, "schemeBuGn", {
+  enumerable: true,
+  get: function () {
+    return _BuGn.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateBuPu", {
+  enumerable: true,
+  get: function () {
+    return _BuPu.default;
+  }
+});
+Object.defineProperty(exports, "schemeBuPu", {
+  enumerable: true,
+  get: function () {
+    return _BuPu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateGnBu", {
+  enumerable: true,
+  get: function () {
+    return _GnBu.default;
+  }
+});
+Object.defineProperty(exports, "schemeGnBu", {
+  enumerable: true,
+  get: function () {
+    return _GnBu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateOrRd", {
+  enumerable: true,
+  get: function () {
+    return _OrRd.default;
+  }
+});
+Object.defineProperty(exports, "schemeOrRd", {
+  enumerable: true,
+  get: function () {
+    return _OrRd.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePuBuGn", {
+  enumerable: true,
+  get: function () {
+    return _PuBuGn.default;
+  }
+});
+Object.defineProperty(exports, "schemePuBuGn", {
+  enumerable: true,
+  get: function () {
+    return _PuBuGn.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePuBu", {
+  enumerable: true,
+  get: function () {
+    return _PuBu.default;
+  }
+});
+Object.defineProperty(exports, "schemePuBu", {
+  enumerable: true,
+  get: function () {
+    return _PuBu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePuRd", {
+  enumerable: true,
+  get: function () {
+    return _PuRd.default;
+  }
+});
+Object.defineProperty(exports, "schemePuRd", {
+  enumerable: true,
+  get: function () {
+    return _PuRd.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateRdPu", {
+  enumerable: true,
+  get: function () {
+    return _RdPu.default;
+  }
+});
+Object.defineProperty(exports, "schemeRdPu", {
+  enumerable: true,
+  get: function () {
+    return _RdPu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateYlGnBu", {
+  enumerable: true,
+  get: function () {
+    return _YlGnBu.default;
+  }
+});
+Object.defineProperty(exports, "schemeYlGnBu", {
+  enumerable: true,
+  get: function () {
+    return _YlGnBu.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateYlGn", {
+  enumerable: true,
+  get: function () {
+    return _YlGn.default;
+  }
+});
+Object.defineProperty(exports, "schemeYlGn", {
+  enumerable: true,
+  get: function () {
+    return _YlGn.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateYlOrBr", {
+  enumerable: true,
+  get: function () {
+    return _YlOrBr.default;
+  }
+});
+Object.defineProperty(exports, "schemeYlOrBr", {
+  enumerable: true,
+  get: function () {
+    return _YlOrBr.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateYlOrRd", {
+  enumerable: true,
+  get: function () {
+    return _YlOrRd.default;
+  }
+});
+Object.defineProperty(exports, "schemeYlOrRd", {
+  enumerable: true,
+  get: function () {
+    return _YlOrRd.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateBlues", {
+  enumerable: true,
+  get: function () {
+    return _Blues.default;
+  }
+});
+Object.defineProperty(exports, "schemeBlues", {
+  enumerable: true,
+  get: function () {
+    return _Blues.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateGreens", {
+  enumerable: true,
+  get: function () {
+    return _Greens.default;
+  }
+});
+Object.defineProperty(exports, "schemeGreens", {
+  enumerable: true,
+  get: function () {
+    return _Greens.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateGreys", {
+  enumerable: true,
+  get: function () {
+    return _Greys.default;
+  }
+});
+Object.defineProperty(exports, "schemeGreys", {
+  enumerable: true,
+  get: function () {
+    return _Greys.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolatePurples", {
+  enumerable: true,
+  get: function () {
+    return _Purples.default;
+  }
+});
+Object.defineProperty(exports, "schemePurples", {
+  enumerable: true,
+  get: function () {
+    return _Purples.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateReds", {
+  enumerable: true,
+  get: function () {
+    return _Reds.default;
+  }
+});
+Object.defineProperty(exports, "schemeReds", {
+  enumerable: true,
+  get: function () {
+    return _Reds.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateOranges", {
+  enumerable: true,
+  get: function () {
+    return _Oranges.default;
+  }
+});
+Object.defineProperty(exports, "schemeOranges", {
+  enumerable: true,
+  get: function () {
+    return _Oranges.scheme;
+  }
+});
+Object.defineProperty(exports, "interpolateCividis", {
+  enumerable: true,
+  get: function () {
+    return _cividis.default;
+  }
+});
+Object.defineProperty(exports, "interpolateCubehelixDefault", {
+  enumerable: true,
+  get: function () {
+    return _cubehelix.default;
+  }
+});
+Object.defineProperty(exports, "interpolateRainbow", {
+  enumerable: true,
+  get: function () {
+    return _rainbow.default;
+  }
+});
+Object.defineProperty(exports, "interpolateWarm", {
+  enumerable: true,
+  get: function () {
+    return _rainbow.warm;
+  }
+});
+Object.defineProperty(exports, "interpolateCool", {
+  enumerable: true,
+  get: function () {
+    return _rainbow.cool;
+  }
+});
+Object.defineProperty(exports, "interpolateSinebow", {
+  enumerable: true,
+  get: function () {
+    return _sinebow.default;
+  }
+});
+Object.defineProperty(exports, "interpolateTurbo", {
+  enumerable: true,
+  get: function () {
+    return _turbo.default;
+  }
+});
+Object.defineProperty(exports, "interpolateViridis", {
+  enumerable: true,
+  get: function () {
+    return _viridis.default;
+  }
+});
+Object.defineProperty(exports, "interpolateMagma", {
+  enumerable: true,
+  get: function () {
+    return _viridis.magma;
+  }
+});
+Object.defineProperty(exports, "interpolateInferno", {
+  enumerable: true,
+  get: function () {
+    return _viridis.inferno;
+  }
+});
+Object.defineProperty(exports, "interpolatePlasma", {
+  enumerable: true,
+  get: function () {
+    return _viridis.plasma;
+  }
+});
+
+var _category = _interopRequireDefault(require("./categorical/category10.js"));
+
+var _Accent = _interopRequireDefault(require("./categorical/Accent.js"));
+
+var _Dark = _interopRequireDefault(require("./categorical/Dark2.js"));
+
+var _Paired = _interopRequireDefault(require("./categorical/Paired.js"));
+
+var _Pastel = _interopRequireDefault(require("./categorical/Pastel1.js"));
+
+var _Pastel2 = _interopRequireDefault(require("./categorical/Pastel2.js"));
+
+var _Set = _interopRequireDefault(require("./categorical/Set1.js"));
+
+var _Set2 = _interopRequireDefault(require("./categorical/Set2.js"));
+
+var _Set3 = _interopRequireDefault(require("./categorical/Set3.js"));
+
+var _Tableau = _interopRequireDefault(require("./categorical/Tableau10.js"));
+
+var _BrBG = _interopRequireWildcard(require("./diverging/BrBG.js"));
+
+var _PRGn = _interopRequireWildcard(require("./diverging/PRGn.js"));
+
+var _PiYG = _interopRequireWildcard(require("./diverging/PiYG.js"));
+
+var _PuOr = _interopRequireWildcard(require("./diverging/PuOr.js"));
+
+var _RdBu = _interopRequireWildcard(require("./diverging/RdBu.js"));
+
+var _RdGy = _interopRequireWildcard(require("./diverging/RdGy.js"));
+
+var _RdYlBu = _interopRequireWildcard(require("./diverging/RdYlBu.js"));
+
+var _RdYlGn = _interopRequireWildcard(require("./diverging/RdYlGn.js"));
+
+var _Spectral = _interopRequireWildcard(require("./diverging/Spectral.js"));
+
+var _BuGn = _interopRequireWildcard(require("./sequential-multi/BuGn.js"));
+
+var _BuPu = _interopRequireWildcard(require("./sequential-multi/BuPu.js"));
+
+var _GnBu = _interopRequireWildcard(require("./sequential-multi/GnBu.js"));
+
+var _OrRd = _interopRequireWildcard(require("./sequential-multi/OrRd.js"));
+
+var _PuBuGn = _interopRequireWildcard(require("./sequential-multi/PuBuGn.js"));
+
+var _PuBu = _interopRequireWildcard(require("./sequential-multi/PuBu.js"));
+
+var _PuRd = _interopRequireWildcard(require("./sequential-multi/PuRd.js"));
+
+var _RdPu = _interopRequireWildcard(require("./sequential-multi/RdPu.js"));
+
+var _YlGnBu = _interopRequireWildcard(require("./sequential-multi/YlGnBu.js"));
+
+var _YlGn = _interopRequireWildcard(require("./sequential-multi/YlGn.js"));
+
+var _YlOrBr = _interopRequireWildcard(require("./sequential-multi/YlOrBr.js"));
+
+var _YlOrRd = _interopRequireWildcard(require("./sequential-multi/YlOrRd.js"));
+
+var _Blues = _interopRequireWildcard(require("./sequential-single/Blues.js"));
+
+var _Greens = _interopRequireWildcard(require("./sequential-single/Greens.js"));
+
+var _Greys = _interopRequireWildcard(require("./sequential-single/Greys.js"));
+
+var _Purples = _interopRequireWildcard(require("./sequential-single/Purples.js"));
+
+var _Reds = _interopRequireWildcard(require("./sequential-single/Reds.js"));
+
+var _Oranges = _interopRequireWildcard(require("./sequential-single/Oranges.js"));
+
+var _cividis = _interopRequireDefault(require("./sequential-multi/cividis.js"));
+
+var _cubehelix = _interopRequireDefault(require("./sequential-multi/cubehelix.js"));
+
+var _rainbow = _interopRequireWildcard(require("./sequential-multi/rainbow.js"));
+
+var _sinebow = _interopRequireDefault(require("./sequential-multi/sinebow.js"));
+
+var _turbo = _interopRequireDefault(require("./sequential-multi/turbo.js"));
+
+var _viridis = _interopRequireWildcard(require("./sequential-multi/viridis.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./categorical/category10.js":"../node_modules/d3-scale-chromatic/src/categorical/category10.js","./categorical/Accent.js":"../node_modules/d3-scale-chromatic/src/categorical/Accent.js","./categorical/Dark2.js":"../node_modules/d3-scale-chromatic/src/categorical/Dark2.js","./categorical/Paired.js":"../node_modules/d3-scale-chromatic/src/categorical/Paired.js","./categorical/Pastel1.js":"../node_modules/d3-scale-chromatic/src/categorical/Pastel1.js","./categorical/Pastel2.js":"../node_modules/d3-scale-chromatic/src/categorical/Pastel2.js","./categorical/Set1.js":"../node_modules/d3-scale-chromatic/src/categorical/Set1.js","./categorical/Set2.js":"../node_modules/d3-scale-chromatic/src/categorical/Set2.js","./categorical/Set3.js":"../node_modules/d3-scale-chromatic/src/categorical/Set3.js","./categorical/Tableau10.js":"../node_modules/d3-scale-chromatic/src/categorical/Tableau10.js","./diverging/BrBG.js":"../node_modules/d3-scale-chromatic/src/diverging/BrBG.js","./diverging/PRGn.js":"../node_modules/d3-scale-chromatic/src/diverging/PRGn.js","./diverging/PiYG.js":"../node_modules/d3-scale-chromatic/src/diverging/PiYG.js","./diverging/PuOr.js":"../node_modules/d3-scale-chromatic/src/diverging/PuOr.js","./diverging/RdBu.js":"../node_modules/d3-scale-chromatic/src/diverging/RdBu.js","./diverging/RdGy.js":"../node_modules/d3-scale-chromatic/src/diverging/RdGy.js","./diverging/RdYlBu.js":"../node_modules/d3-scale-chromatic/src/diverging/RdYlBu.js","./diverging/RdYlGn.js":"../node_modules/d3-scale-chromatic/src/diverging/RdYlGn.js","./diverging/Spectral.js":"../node_modules/d3-scale-chromatic/src/diverging/Spectral.js","./sequential-multi/BuGn.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/BuGn.js","./sequential-multi/BuPu.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/BuPu.js","./sequential-multi/GnBu.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/GnBu.js","./sequential-multi/OrRd.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/OrRd.js","./sequential-multi/PuBuGn.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/PuBuGn.js","./sequential-multi/PuBu.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/PuBu.js","./sequential-multi/PuRd.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/PuRd.js","./sequential-multi/RdPu.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/RdPu.js","./sequential-multi/YlGnBu.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/YlGnBu.js","./sequential-multi/YlGn.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/YlGn.js","./sequential-multi/YlOrBr.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/YlOrBr.js","./sequential-multi/YlOrRd.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/YlOrRd.js","./sequential-single/Blues.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Blues.js","./sequential-single/Greens.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Greens.js","./sequential-single/Greys.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Greys.js","./sequential-single/Purples.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Purples.js","./sequential-single/Reds.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Reds.js","./sequential-single/Oranges.js":"../node_modules/d3-scale-chromatic/src/sequential-single/Oranges.js","./sequential-multi/cividis.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/cividis.js","./sequential-multi/cubehelix.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/cubehelix.js","./sequential-multi/rainbow.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/rainbow.js","./sequential-multi/sinebow.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/sinebow.js","./sequential-multi/turbo.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/turbo.js","./sequential-multi/viridis.js":"../node_modules/d3-scale-chromatic/src/sequential-multi/viridis.js"}],"index.js":[function(require,module,exports) {
 'use strict';
 
 var helper = _interopRequireWildcard(require("./scripts/helper.js"));
@@ -10123,9 +11915,15 @@ var legend = _interopRequireWildcard(require("./scripts/legend.js"));
 
 var panel = _interopRequireWildcard(require("./scripts/panel.js"));
 
+var hover = _interopRequireWildcard(require("./scripts/hover.js"));
+
+var d3Chromatic = _interopRequireWildcard(require("d3-scale-chromatic"));
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// import * as util from './scripts/util.js'
 
 /**
  * @file This file is the entry-point for the the code for the projet for the course INF8808.
@@ -10170,9 +11968,76 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       var simulation = helper.getSimulation(data);
       helper.simulate(simulation);
     });
-  }
+  } // visualisation 3
+
+
+  var boundsV3;
+  var svgSizeV3;
+  var graphSizeV3;
+  var margin = {
+    top: 35,
+    right: 200,
+    bottom: 35,
+    left: 200
+  };
+  var xScale = d3.scaleBand().padding(0.05);
+  var yScale = d3.scaleBand().padding(0.2);
+  var colorScale = d3.scaleSequential(d3Chromatic.interpolateYlGnBu);
+  var players = ['Mbappe', 'Benzema', 'Mane'];
+  var aspects = ['Tkl', 'Ast', 'Gls', 'Succ', 'Int'];
+  d3.csv('./stats_summary_GLOBAL.csv', d3.autoType).then(function (data) {
+    data = preprocess.summarizeLinesV3(data);
+    data = preprocess.arrangeV3(data);
+    console.log(data);
+    viz.setColorScaleDomainV3(colorScale, data);
+    legend.initGradientV3(colorScale);
+    legend.initLegendBarV3();
+    legend.initLegendAxisV3();
+    var g = helper.generateGV3(margin);
+    helper.appendAxesV3(g);
+    viz.appendRectsV3(data);
+    setSizingV3();
+    buildV3();
+    /**
+     *   This function handles the graph's sizing.
+     */
+
+    function setSizingV3() {
+      boundsV3 = d3.select('.graph3').node().getBoundingClientRect();
+      console.log(boundsV3);
+      svgSizeV3 = {
+        width: 800,
+        height: 550
+      };
+      graphSizeV3 = {
+        width: svgSizeV3.width - margin.right - margin.left,
+        height: svgSizeV3.height - margin.bottom - margin.top
+      };
+      helper.setCanvasSizeV3(svgSizeV3.width, svgSizeV3.height);
+    }
+    /**
+     *   This function builds the graph.
+     */
+
+
+    function buildV3() {
+      viz.updateXScaleV3(xScale, players, graphSizeV3.width);
+      viz.updateYScaleV3(yScale, aspects, graphSizeV3.height);
+      viz.drawXAxisV3(xScale);
+      viz.drawYAxisV3(yScale, graphSizeV3.width);
+      viz.rotateXTicksV3();
+      viz.updateRectsV3(xScale, yScale, colorScale);
+      hover.setRectHandlerV3(xScale, yScale, hover.rectSelectedV3, hover.rectUnselectedV3, hover.selectTicksV3, hover.unselectTicksV3);
+      legend.drawV3(margin.left / 2, margin.top + 5, graphSizeV3.height - 10, 15, 'url(#gradient)', colorScale);
+    }
+
+    window.addEventListener('resize', function () {
+      setSizingV3();
+      buildV3();
+    });
+  });
 })(d3);
-},{"./scripts/helper.js":"scripts/helper.js","./scripts/viz.js":"scripts/viz.js","./scripts/preprocess.js":"scripts/preprocess.js","./scripts/legend.js":"scripts/legend.js","./scripts/panel.js":"scripts/panel.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./scripts/helper.js":"scripts/helper.js","./scripts/viz.js":"scripts/viz.js","./scripts/preprocess.js":"scripts/preprocess.js","./scripts/legend.js":"scripts/legend.js","./scripts/panel.js":"scripts/panel.js","./scripts/hover.js":"scripts/hover.js","d3-scale-chromatic":"../node_modules/d3-scale-chromatic/src/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10200,7 +12065,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53896" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51003" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

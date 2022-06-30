@@ -49,3 +49,65 @@ export function simplifyDisplayTitles (data) {
     feature.properties.TYPE_SITE_INTERVENTION = TITLES[feature.properties.TYPE_SITE_INTERVENTION]
   })
 }
+
+
+export function summarizeLinesV3 (data) {
+  // TODO : Generate the data structure as defined above
+  
+  // class by players, get all the players
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+
+  // return the structure
+  return getPlayers.map((player) => ({
+        Player: player,
+        Tkl: countGoalV3(data.filter((row) => parseInt(row.ID) === player))[0],
+        Ast: countGoalV3(data.filter((row) => parseInt(row.ID) === player))[1],
+        Gls: countGoalV3(data.filter((row) => parseInt(row.ID) === player))[2],
+        Succ: countGoalV3(data.filter((row) => parseInt(row.ID) === player))[3],
+        Int: countGoalV3(data.filter((row) => parseInt(row.ID) === player))[4],
+      }))
+      .filter((elt) => elt.Count !== 0)
+}
+
+export function arrangeV3(tabtemp) {
+  let tableResult = [];
+  let players = ['Mbappe', 'Benzema', 'Mane']
+  let aspects = ['Tkl', 'Ast', 'Gls', 'Succ','Int']
+  let indexplayer = -1
+  players.forEach((player) => {
+    indexplayer += 1
+    aspects.forEach((aspect)=> {
+      tableResult.push({"Players" : player, "Aspects" :aspect, "Counts" :tabtemp[indexplayer][aspect]})
+    })
+  })
+  
+  return tableResult;
+}
+
+function countGoalV3(temps) {
+  let tempTkl = 0;
+  let tempAst = 0;
+  let tempGls = 0;
+  let tempSucc = 0;
+  let tempInt = 0;
+  temps.forEach((row) =>{
+    if(row.Tkl != null) {
+      tempTkl += parseInt(row.Tkl)
+    }
+    if(row.Ast != null) {
+      tempAst += parseInt(row.Ast)
+    }
+    if(row.Gls != null) {
+      tempGls += parseInt(row.Gls)
+    }
+    if(row.Succ != null) {
+      tempSucc += parseInt(row.Succ)
+    }
+    if(row.Int != null) {
+      tempInt += parseInt(row.Int)
+    }
+    
+  })
+  let temp = [tempTkl, tempAst, tempGls, tempSucc, tempInt]
+  return temp
+}

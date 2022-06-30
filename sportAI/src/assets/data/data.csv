@@ -1,0 +1,171 @@
+ID,Date,Day,Comp,Round,Venue,Result,Squad,Opponent,Start,Pos,Min,Gls,Ast,PK,PKatt,Sh,SoT,CrdY,CrdR,Touches,Press,Tkl,Int,Blocks,xG,npxG,xA,SCA,GCA,Cmp,Att,Cmp%,Prog,Carries,Prog,Succ,Att
+1,2021-08-07,Sat,Ligue 1,Matchweek 1,Away,W 2-1,Paris S-G,Troyes,Y,FW,89,0,1,0,0,2,0,0,0,44,11,0,1,0,0.1,0.1,0.6,5,1,24,34,70.6,0,40,5,5,8
+1,2021-08-14,Sat,Ligue 1,Matchweek 2,Home,W 4-2,Paris S-G,Strasbourg,Y,"LW,FW",90,0,2,0,0,4,2,0,0,62,7,1,0,0,0.6,0.6,0.8,6,2,31,45,68.9,4,49,12,5,9
+1,2021-08-20,Fri,Ligue 1,Matchweek 3,Away,W 4-2,Paris S-G,Brest,Y,FW,80,1,0,0,0,5,2,1,0,78,10,1,0,1,0.5,0.5,0.1,5,1,50,59,84.7,6,58,8,1,4
+1,2021-08-29,Sun,Ligue 1,Matchweek 4,Away,W 2-0,Paris S-G,Reims,Y,FW,90,2,0,0,0,5,2,0,0,56,6,0,0,1,0.7,0.7,0,1,0,34,41,82.9,2,40,6,2,3
+1,2021-09-01,Wed,WCQ,First round,Home,D 1-1,fr France,ba Bosnia and Herzegovina,Y,FW,89,0,0,0,0,1,0,0,0,,,,0,,,,,,,,,,,,,,
+1,2021-09-11,Sat,Ligue 1,Matchweek 5,Home,W 4-0,Paris S-G,Clermont Foot,Y,FW,78,1,0,0,0,5,3,0,0,40,4,0,1,0,1.4,1.4,0.3,7,2,21,27,77.8,6,34,8,3,4
+1,2021-09-15,Wed,Champions Lg,Group stage,Away,D 1-1,fr Paris S-G,be Club Brugge,Y,FW,50,0,1,0,0,1,1,0,0,24,5,1,1,0,0.3,0.3,0.2,1,1,15,17,88.2,2,18,4,2,3
+1,2021-09-19,Sun,Ligue 1,Matchweek 6,Home,W 2-1,Paris S-G,Lyon,Y,"FW,AM",90,0,1,0,0,2,0,0,0,39,14,0,0,0,0.1,0.1,0.5,2,1,26,29,89.7,0,33,9,0,0
+1,2021-09-22,Wed,Ligue 1,Matchweek 7,Away,W 2-1,Paris S-G,Metz,Y,"FW,LW",90,0,0,0,0,3,1,0,0,70,5,2,0,0,0.3,0.3,0.2,6,0,45,55,81.8,7,57,16,0,2
+1,2021-09-25,Sat,Ligue 1,Matchweek 8,Home,W 2-0,Paris S-G,Montpellier,Y,FW,87,0,0,0,0,5,1,0,0,40,3,0,1,0,0.9,0.9,0.1,5,0,23,29,79.3,1,36,9,6,6
+1,2021-09-28,Tue,Champions Lg,Group stage,Home,W 2-0,fr Paris S-G,eng Manchester City,Y,FW,90,0,1,0,0,0,0,0,0,56,7,0,1,0,0,0,0.2,3,1,32,42,76.2,1,44,9,6,10
+1,2021-10-03,Sun,Ligue 1,Matchweek 9,Away,L 0-2,Paris S-G,Rennes,Y,"FW,LW",90,0,0,0,0,4,0,1,0,50,11,3,0,0,0.7,0.7,0.1,4,0,30,36,83.3,0,40,11,3,7
+1,2021-10-07,Thu,UEFA Nations League,Semi-finals,Neutral,W 3-2,fr France,be Belgium,Y,FW,90,1,1,1,1,0,0,0,0,,,,0,,,,,,,,,,,,,,
+1,2021-10-10,Sun,UEFA Nations League,Final,Neutral,W 2-1,fr France,es Spain,Y,FW,90,1,1,0,0,0,0,1,0,,,,0,,,,,,,,,,,,,,
+1,2021-10-15,Fri,Ligue 1,Matchweek 10,Home,W 2-1,Paris S-G,Angers,Y,LW,89,1,1,1,1,2,0,0,0,71,7,0,1,0,0.8,0,0.6,3,1,40,52,76.9,4,57,18,5,11
+1,2021-10-19,Tue,Champions Lg,Group stage,Home,W 3-2,fr Paris S-G,de RB Leipzig,Y,FW,90,1,0,0,1,4,1,0,0,47,4,0,0,0,1.3,0.5,0.3,5,1,23,33,69.7,1,43,9,4,8
+1,2021-10-24,Sun,Ligue 1,Matchweek 11,Away,D 0-0,Paris S-G,Marseille,Y,FW,90,0,0,0,0,3,1,0,0,39,4,0,0,0,0.2,0.2,0.1,6,0,23,29,79.3,2,35,6,3,4
+1,2021-11-03,Wed,Champions Lg,Group stage,Away,D 2-2,fr Paris S-G,de RB Leipzig,Y,FW,89,0,1,0,0,3,2,0,0,33,5,0,1,1,0.8,0.8,0.7,2,1,18,24,75,1,22,3,1,2
+1,2021-11-06,Sat,Ligue 1,Matchweek 13,Away,W 3-2,Paris S-G,Bordeaux,Y,FW,85,1,2,0,0,5,2,1,0,50,8,0,1,0,1.2,1.2,0.2,3,2,26,38,68.4,1,30,5,2,3
+1,2021-11-13,Sat,WCQ,First round,Home,W 8-0,fr France,kz Kazakhstan,Y,FW,87,4,1,0,0,7,6,0,0,,,,0,,,,,,,,,,,,,,
+1,2021-11-16,Tue,WCQ,First round,Away,W 2-0,fr France,fi Finland,Y,FW,90,1,1,0,0,3,2,0,0,,,,0,,,,,,,,,,,,,,
+1,2021-11-20,Sat,Ligue 1,Matchweek 14,Home,W 3-1,Paris S-G,Nantes,Y,FW,90,1,1,0,0,4,2,0,0,61,8,1,0,0,0.5,0.5,0.4,3,1,39,50,78,2,52,7,5,6
+1,2021-11-24,Wed,Champions Lg,Group stage,Away,L 1-2,fr Paris S-G,eng Manchester City,Y,FW,90,1,0,0,0,2,1,0,0,39,8,0,1,0,0.4,0.4,0,0,0,27,29,93.1,0,34,6,3,3
+1,2021-11-28,Sun,Ligue 1,Matchweek 15,Away,W 3-1,Paris S-G,Saint-Étienne,Y,FW,90,0,0,0,0,3,2,0,0,47,9,0,0,0,1.2,1.2,0,2,1,27,34,79.4,1,23,3,2,5
+1,2021-12-01,Wed,Ligue 1,Matchweek 16,Home,D 0-0,Paris S-G,Nice,Y,LW,90,0,0,0,0,5,1,0,0,65,8,0,0,0,0.7,0.7,0.3,2,0,33,46,71.7,2,56,12,0,2
+1,2021-12-04,Sat,Ligue 1,Matchweek 17,Away,D 1-1,Paris S-G,Lens,N,FW,21,0,1,0,0,2,2,0,0,13,2,0,0,0,0.3,0.3,0.2,2,1,7,8,87.5,0,12,2,2,4
+1,2021-12-07,Tue,Champions Lg,Group stage,Home,W 4-1,fr Paris S-G,be Club Brugge,Y,"LW,FW",82,2,1,0,0,5,3,1,0,52,7,0,0,0,0.8,0.8,0.3,7,4,34,40,85,2,42,10,5,6
+1,2021-12-12,Sun,Ligue 1,Matchweek 18,Home,W 2-0,Paris S-G,Monaco,Y,"LW,RW,FW",87,2,0,1,1,1,1,1,0,52,7,0,1,0,0.9,0.1,0.4,5,1,28,35,80,3,49,5,4,4
+1,2021-12-19,Sun,Coupe de France,Round of 64,Away,W 3-0,Paris S-G,SC Feignies,Y,FW,90,2,0,1,1,7,3,0,0,,,,1,,,,,,,,,,,,,,
+1,2022-01-03,Mon,Coupe de France,Round of 32,Away,W 4-0,Paris S-G,Vannes,Y,FW,90,3,0,0,0,6,3,0,0,,,,0,,,,,,,,,,,,,,
+1,2022-01-09,Sun,Ligue 1,Matchweek 20,Away,D 1-1,Paris S-G,Lyon,Y,"FW,LW",90,0,0,0,0,5,0,0,0,64,4,0,0,0,0.3,0.3,0,5,1,39,46,84.8,3,51,14,3,7
+1,2022-01-15,Sat,Ligue 1,Matchweek 21,Home,W 2-0,Paris S-G,Brest,Y,"LW,FW",90,1,0,0,0,8,4,1,0,68,11,1,1,0,0.7,0.7,0.3,5,0,39,49,79.6,2,37,8,5,8
+1,2022-01-23,Sun,Ligue 1,Matchweek 22,Home,W 4-0,Paris S-G,Reims,Y,LW,76,0,1,0,0,5,2,0,0,57,7,0,1,0,0.3,0.3,0.6,5,2,36,44,81.8,3,40,10,3,4
+1,2022-01-31,Mon,Coupe de France,Round of 16,Home,D 0 (5)-0 (6),Paris S-G,Nice,N,,57,0,0,0,0,2,0,0,0,,,,0,,,,,,,,,,,,,,
+1,2022-02-06,Sun,Ligue 1,Matchweek 23,Away,W 5-1,Paris S-G,Lille,Y,"LW,FW",90,1,0,0,0,4,1,0,0,60,20,0,2,0,0.3,0.3,0.1,5,0,33,42,78.6,1,45,17,2,6
+1,2022-02-11,Fri,Ligue 1,Matchweek 24,Home,W 1-0,Paris S-G,Rennes,Y,"LW,FW",90,1,0,0,0,5,1,1,0,53,10,0,2,0,0.5,0.5,0.1,5,0,31,39,79.5,2,50,14,3,4
+1,2022-02-15,Tue,Champions Lg,Round of 16,Home,W 1-0,fr Paris S-G,es Real Madrid,Y,"LW,RW",90,1,0,0,0,7,4,0,0,63,10,0,1,1,0.7,0.7,0.4,9,2,41,49,83.7,4,51,21,4,6
+1,2022-02-19,Sat,Ligue 1,Matchweek 25,Away,L 1-3,Paris S-G,Nantes,Y,"FW,LW",90,0,0,0,0,4,2,1,0,53,6,0,0,0,0.8,0.8,0.8,7,0,25,32,78.1,1,41,8,4,10
+1,2022-02-26,Sat,Ligue 1,Matchweek 26,Home,W 3-1,Paris S-G,Saint-Étienne,Y,FW,82,2,1,0,0,4,3,0,0,48,5,0,0,0,0.4,0.4,0.3,1,1,31,38,81.6,3,34,7,2,4
+1,2022-03-09,Wed,Champions Lg,Round of 16,Away,L 1-3,fr Paris S-G,es Real Madrid,Y,"LW,FW",90,1,0,0,0,4,3,0,0,52,5,0,0,1,0.6,0.6,0.1,3,0,34,38,89.5,3,40,9,4,5
+1,2022-03-13,Sun,Ligue 1,Matchweek 28,Home,W 3-0,Paris S-G,Bordeaux,Y,FW,90,1,0,0,0,3,1,0,0,51,11,1,0,0,0.7,0.7,0,5,1,29,38,76.3,3,39,10,2,5
+1,2022-03-20,Sun,Ligue 1,Matchweek 29,Away,L 0-3,Paris S-G,Monaco,Y,FW,90,0,0,0,0,4,0,1,0,59,3,0,0,0,0.4,0.4,0.3,8,0,26,40,65,6,48,13,3,7
+1,2022-03-29,Tue,Friendlies (M),Friendlies (M),Home,W 5-0,fr France,za South Africa,Y,FW,90,2,1,1,1,,,0,0,,,,,,,,,,,,,,,,,,
+1,2022-04-03,Sun,Ligue 1,Matchweek 30,Home,W 5-1,Paris S-G,Lorient,Y,FW,90,2,3,0,0,5,3,0,0,70,10,0,0,0,0.3,0.3,1,11,5,40,48,83.3,4,61,11,7,15
+1,2022-04-09,Sat,Ligue 1,Matchweek 31,Away,W 6-1,Paris S-G,Clermont Foot,Y,FW,90,3,1,0,0,7,6,0,0,65,11,2,0,0,1.3,1.3,0.8,6,4,37,47,78.7,3,53,11,2,5
+1,2022-04-17,Sun,Ligue 1,Matchweek 32,Home,W 2-1,Paris S-G,Marseille,Y,FW,89,1,0,1,1,2,0,1,0,31,9,0,0,1,0.9,0.1,0,3,0,19,22,86.4,1,20,2,2,3
+1,2022-04-20,Wed,Ligue 1,Matchweek 33,Away,W 3-0,Paris S-G,Angers,Y,FW,90,1,0,0,0,5,4,0,0,73,6,0,0,1,0.4,0.4,0,3,2,49,55,89.1,2,58,16,5,12
+1,2022-04-23,Sat,Ligue 1,Matchweek 34,Home,D 1-1,Paris S-G,Lens,Y,FW,90,0,0,0,0,7,1,0,0,86,8,1,1,0,0.8,0.8,0.5,7,1,58,69,84.1,2,62,9,2,6
+1,2022-04-29,Fri,Ligue 1,Matchweek 35,Away,D 3-3,Paris S-G,Strasbourg,Y,FW,90,2,1,0,0,3,2,0,0,67,21,0,0,0,0.8,0.8,0.5,4,1,40,46,87,2,57,12,1,7
+1,2022-05-08,Sun,Ligue 1,Matchweek 36,Home,D 2-2,Paris S-G,Troyes,Y,FW,90,0,0,0,0,2,2,0,0,48,5,1,0,0,0.1,0.1,0.2,5,1,31,38,81.6,2,38,5,0,4
+1,2022-05-14,Sat,Ligue 1,Matchweek 37,Away,W 4-0,Paris S-G,Montpellier,Y,"LW,FW",90,1,2,1,1,3,2,1,0,72,6,0,0,1,1,0.2,0.9,9,3,47,56,83.9,2,67,14,6,10
+1,2022-05-21,Sat,Ligue 1,Matchweek 38,Home,W 5-0,Paris S-G,Metz,Y,FW,90,3,0,0,0,8,4,0,0,77,4,0,1,0,2.1,2.1,1,11,2,47,56,83.9,2,59,10,3,9
+2,2021-08-14,Sat,La Liga,Matchweek 1,Away,W 4-1,Real Madrid,Alavés,Y*,FW,88,2,0,0,0,6,3,0,0,55,8,0,0,0,0.7,0.7,0,4,1,39,45,86.7,4,36,5,2,2
+2,2021-08-22,Sun,La Liga,Matchweek 2,Away,D 3-3,Real Madrid,Levante,Y*,FW,90,0,2,0,0,1,0,0,0,39,9,1,0,0,0.1,0.1,0.2,3,2,27,32,84.4,3,25,3,0,0
+2,2021-08-28,Sat,La Liga,Matchweek 3,Away,W 1-0,Real Madrid,Betis,Y*,FW,90,0,1,0,0,2,0,0,0,48,6,0,1,2,0.1,0.1,0.3,4,1,31,37,83.8,5,30,5,2,2
+2,2021-09-01,Wed,WCQ,First round,Home,D 1-1,fr France,ba Bosnia and Herzegovina,Y,FW,75,0,0,0,0,2,1,0,0,,,,0,,,,,,,,,,,,,,
+2,2021-09-04,Sat,WCQ,First round,Away,D 1-1,fr France,ua Ukraine,N,,27,0,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+2,2021-09-07,Tue,WCQ,First round,Home,W 2-0,fr France,fi Finland,Y,FW,90,0,1,0,0,5,2,0,0,,,,1,,,,,,,,,,,,,,
+2,2021-09-12,Sun,La Liga,Matchweek 4,Home,W 5-2,Real Madrid,Celta Vigo,Y*,FW,90,3,1,1,1,4,2,0,0,55,15,1,0,1,1.1,0.3,1.3,6,2,39,44,88.6,5,36,5,1,1
+2,2021-09-15,Wed,Champions Lg,Group stage,Away,W 1-0,es Real Madrid,it Inter,Y*,FW,90,0,0,0,0,2,0,0,0,51,13,0,0,1,0.1,0.1,0.3,2,0,33,43,76.7,4,41,6,1,1
+2,2021-09-19,Sun,La Liga,Matchweek 5,Away,W 2-1,Real Madrid,Valencia,Y*,FW,90,1,1,0,0,5,3,0,0,41,8,0,0,1,0.5,0.5,0.1,4,1,29,34,85.3,5,35,9,2,2
+2,2021-09-22,Wed,La Liga,Matchweek 6,Home,W 6-1,Real Madrid,Mallorca,Y*,FW,79,2,2,0,0,4,3,0,0,55,5,1,1,0,0.6,0.6,1.3,6,2,34,44,77.3,5,49,5,0,2
+2,2021-09-25,Sat,La Liga,Matchweek 7,Home,D 0-0,Real Madrid,Villarreal,Y*,FW,90,0,0,0,0,3,1,0,0,27,20,1,1,0,0.1,0.1,0,1,0,16,20,80,1,21,6,0,0
+2,2021-09-28,Tue,Champions Lg,Group stage,Home,L 1-2,es Real Madrid,md Sheriff Tiraspol,Y*,FW,90,1,0,1,1,5,2,0,0,77,5,0,0,1,1.1,0.4,0.4,10,0,56,69,81.2,10,62,14,2,2
+2,2021-10-03,Sun,La Liga,Matchweek 8,Away,L 1-2,Real Madrid,Espanyol,Y*,FW,90,1,0,0,0,8,4,0,0,69,7,0,0,2,0.8,0.8,0.2,10,2,50,55,90.9,6,40,4,3,4
+2,2021-10-07,Thu,UEFA Nations League,Semi-finals,Neutral,W 3-2,fr France,be Belgium,Y,FW,89,1,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+2,2021-10-10,Sun,UEFA Nations League,Final,Neutral,W 2-1,fr France,es Spain,Y,FW,90,1,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+2,2021-10-19,Tue,Champions Lg,Group stage,Away,W 5-0,es Real Madrid,ua Shakhtar,Y*,FW,90,1,0,0,0,7,4,0,0,68,25,2,3,0,1,1,0.4,8,2,37,49,75.5,8,53,6,5,6
+2,2021-10-24,Sun,La Liga,Matchweek 10,Away,W 2-1,Real Madrid,Barcelona,Y*,FW,90,0,0,0,0,1,1,0,0,48,3,1,0,0,0.1,0.1,0,3,0,35,41,85.4,3,39,2,1,1
+2,2021-10-27,Wed,La Liga,Matchweek 11,Home,D 0-0,Real Madrid,Osasuna,Y*,FW,90,0,0,0,0,5,0,0,0,56,9,1,0,0,0.3,0.3,0,5,0,37,48,77.1,3,40,8,2,3
+2,2021-11-03,Wed,Champions Lg,Group stage,Home,W 2-1,es Real Madrid,ua Shakhtar,Y*,FW,78,2,0,0,0,5,2,0,0,48,19,0,0,1,1.5,1.5,0.2,3,0,33,37,89.2,5,35,7,3,4
+2,2021-11-06,Sat,La Liga,Matchweek 13,Home,W 2-1,Real Madrid,Rayo Vallecano,Y*,FW,82,1,0,0,0,6,1,0,0,51,8,0,0,0,1.1,1.1,0.1,1,0,32,42,76.2,3,32,5,1,1
+2,2021-11-13,Sat,WCQ,First round,Home,W 8-0,fr France,kz Kazakhstan,Y,FW,70,2,0,0,0,3,2,1,0,,,,0,,,,,,,,,,,,,,
+2,2021-11-16,Tue,WCQ,First round,Away,W 2-0,fr France,fi Finland,N,,34,1,0,0,0,2,2,0,0,,,,1,,,,,,,,,,,,,,
+2,2021-11-21,Sun,La Liga,Matchweek 14,Away,W 4-1,Real Madrid,Granada,Y*,FW,79,0,0,0,0,4,1,0,0,39,5,0,0,0,0.4,0.4,0.9,8,1,25,30,83.3,5,31,9,1,3
+2,2021-11-24,Wed,Champions Lg,Group stage,Away,W 3-0,es Real Madrid,md Sheriff Tiraspol,Y*,FW,90,1,0,0,0,4,1,0,0,82,3,0,1,0,0.3,0.3,0.5,5,0,62,73,84.9,6,67,17,0,1
+2,2021-11-28,Sun,La Liga,Matchweek 15,Home,W 2-1,Real Madrid,Sevilla,Y*,FW,90,1,0,0,0,2,1,0,0,48,20,1,0,0,0.8,0.8,0,1,0,36,42,85.7,4,31,5,1,1
+2,2021-12-01,Wed,La Liga,Matchweek 9,Home,W 1-0,Real Madrid,Athletic Club,Y*,FW,90,1,0,0,0,4,3,0,0,52,9,1,1,0,1.2,1.2,0.1,5,0,38,42,90.5,4,38,12,1,1
+2,2021-12-04,Sat,La Liga,Matchweek 16,Away,W 2-0,Real Madrid,Real Sociedad,Y*,FW,16,0,0,0,0,0,0,0,0,6,1,0,0,0,0,0,0,1,0,6,6,100,0,4,0,0,0
+2,2021-12-12,Sun,La Liga,Matchweek 17,Home,W 2-0,Real Madrid,Atlético Madrid,Y*,FW,45,1,0,0,0,1,1,0,0,29,7,1,0,0,0.1,0.1,0,1,0,21,26,80.8,0,15,1,0,0
+2,2021-12-19,Sun,La Liga,Matchweek 18,Home,D 0-0,Real Madrid,Cádiz,Y*,FW,90,0,0,0,0,5,2,0,0,72,4,0,0,0,0.7,0.7,0.3,9,0,56,62,90.3,14,48,8,1,1
+2,2021-12-22,Wed,La Liga,Matchweek 21,Away,W 2-1,Real Madrid,Athletic Club,Y*,FW,89,2,0,0,0,2,2,0,0,57,12,0,0,0,0.4,0.4,0.1,1,0,47,52,90.4,7,38,7,1,1
+2,2022-01-02,Sun,La Liga,Matchweek 19,Away,L 0-1,Real Madrid,Getafe,Y*,FW,90,0,0,0,0,3,0,0,0,58,5,0,0,0,0.1,0.1,0,2,0,34,48,70.8,3,55,9,1,1
+2,2022-01-08,Sat,La Liga,Matchweek 20,Home,W 4-1,Real Madrid,Valencia,Y*,FW,88,2,0,1,1,3,1,0,0,48,6,0,1,0,1.1,0.3,0.6,5,0,31,36,86.1,8,32,2,1,1
+2,2022-01-12,Wed,Supercopa de España,Semi-finals,Away,W 3-2,Real Madrid,Barcelona,Y*,FW,120,1,1,0,0,4,2,0,0,,,,0,,,,,,,,,,,,,,
+2,2022-01-16,Sun,Supercopa de España,Final,Away,W 2-0,Real Madrid,Athletic Club,Y*,FW,90,1,0,1,1,4,1,0,0,,,,0,,,,,,,,,,,,,,
+2,2022-01-23,Sun,La Liga,Matchweek 22,Home,D 2-2,Real Madrid,Elche,Y*,FW,57,0,0,0,1,4,2,0,0,24,1,0,0,0,1.3,0.6,0.3,2,0,16,18,88.9,2,18,2,0,0
+2,2022-02-15,Tue,Champions Lg,Round of 16,Away,L 0-1,es Real Madrid,fr Paris S-G,Y*,FW,86,0,0,0,0,0,0,0,0,35,17,0,0,0,0,0,0,0,0,26,32,81.3,3,25,3,1,1
+2,2022-02-19,Sat,La Liga,Matchweek 25,Home,W 3-0,Real Madrid,Alavés,Y*,FW,90,1,2,1,1,6,0,0,0,60,9,0,2,1,1.8,1,0.4,4,2,39,44,88.6,5,42,7,0,2
+2,2022-02-26,Sat,La Liga,Matchweek 26,Away,W 1-0,Real Madrid,Rayo Vallecano,Y*,FW,90,1,0,0,0,5,3,0,0,52,10,0,0,1,1.3,1.3,0.2,3,1,42,43,97.7,5,42,6,2,2
+2,2022-03-05,Sat,La Liga,Matchweek 27,Home,W 4-1,Real Madrid,Real Sociedad,Y*,FW,83,1,1,1,1,3,2,0,0,47,9,0,0,0,1,0.2,0.2,4,1,36,41,87.8,4,41,8,0,0
+2,2022-03-09,Wed,Champions Lg,Round of 16,Home,W 3-1,es Real Madrid,fr Paris S-G,Y*,FW,90,3,0,0,0,7,5,0,0,52,22,1,0,0,1.1,1.1,0,0,0,33,42,78.6,3,36,8,0,1
+2,2022-03-14,Mon,La Liga,Matchweek 28,Away,W 3-0,Real Madrid,Mallorca,Y*,FW,90,2,1,1,1,2,2,0,0,53,9,1,0,2,1.2,0.4,0.6,4,2,34,41,82.9,7,32,8,2,3
+2,2022-04-02,Sat,La Liga,Matchweek 30,Away,W 2-1,Real Madrid,Celta Vigo,Y*,FW,90,2,0,2,3,2,1,0,0,45,15,0,0,0,2.6,0.3,0.1,2,0,30,35,85.7,4,29,3,0,2
+2,2022-04-06,Wed,Champions Lg,Quarter-finals,Away,W 3-1,es Real Madrid,eng Chelsea,Y*,FW,85,3,0,0,0,4,3,0,0,51,24,0,0,2,1.3,1.3,0,3,1,38,44,86.4,3,36,5,0,0
+2,2022-04-09,Sat,La Liga,Matchweek 31,Home,W 2-0,Real Madrid,Getafe,Y,FW,73,0,0,0,0,4,0,0,0,56,10,0,0,0,0.2,0.2,0.1,3,0,38,49,77.6,5,51,8,0,0
+2,2022-04-12,Tue,Champions Lg,Quarter-finals,Home,L 2-3,es Real Madrid,eng Chelsea,Y*,FW,120,1,0,0,0,4,1,1,0,62,25,1,0,2,0.3,0.3,0.1,5,0,40,47,85.1,3,45,2,0,2
+2,2022-04-17,Sun,La Liga,Matchweek 32,Away,W 3-2,Real Madrid,Sevilla,Y*,FW,89,1,0,0,0,7,3,0,0,47,10,0,0,0,0.6,0.6,0,1,0,32,38,84.2,3,37,9,2,3
+2,2022-04-20,Wed,La Liga,Matchweek 33,Away,W 3-1,Real Madrid,Osasuna,Y*,FW,90,0,0,0,2,3,0,0,0,57,6,0,0,0,1.7,0.1,0.6,8,0,41,49,83.7,4,55,5,3,3
+2,2022-04-26,Tue,Champions Lg,Semi-finals,Away,L 3-4,es Real Madrid,eng Manchester City,Y*,FW,90,2,0,1,1,2,1,0,0,37,14,0,0,1,0.9,0.1,0.2,5,0,24,28,85.7,4,31,2,3,6
+2,2022-04-30,Sat,La Liga,Matchweek 34,Home,W 4-0,Real Madrid,Espanyol,N,FW,31,1,0,0,0,1,1,0,0,26,1,0,0,0,0.3,0.3,0.2,2,0,21,24,87.5,3,25,1,2,2
+2,2022-05-04,Wed,Champions Lg,Semi-finals,Home,W 3-1,es Real Madrid,eng Manchester City,Y*,FW,103,1,1,1,1,3,1,0,0,35,8,0,0,3,1,0.3,0.5,3,2,19,20,95,5,21,6,0,0
+2,2022-05-12,Thu,La Liga,Matchweek 36,Home,W 6-0,Real Madrid,Levante,Y*,FW,74,1,1,0,0,5,3,0,0,53,3,0,0,0,0.7,0.7,1.4,6,3,35,44,79.5,5,47,9,2,4
+2,2022-05-20,Fri,La Liga,Matchweek 38,Home,D 0-0,Real Madrid,Betis,Y*,FW,90,0,0,0,0,7,1,0,0,48,11,1,0,0,0.4,0.4,0,5,0,31,37,83.8,2,26,6,1,1
+2,2022-05-28,Sat,Champions Lg,Final,Neutral,W 1-0,es Real Madrid,eng Liverpool,Y*,FW,90,0,0,0,0,0,0,0,0,56,12,0,1,1,0,0,0.1,1,0,34,46,73.9,2,43,7,0,2
+3,2021-08-14,Sat,Premier League,Matchweek 1,Away,W 3-0,Liverpool,Norwich City,Y,LW,90,0,0,0,0,3,0,0,0,44,19,2,0,0,0.2,0.2,0.2,4,1,19,31,61.3,3,32,7,1,2
+3,2021-08-21,Sat,Premier League,Matchweek 2,Home,W 2-0,Liverpool,Burnley,Y,LW,90,1,0,0,0,7,4,0,0,39,8,0,0,2,1.3,1.3,0.2,2,0,16,23,69.6,4,21,4,1,3
+3,2021-08-28,Sat,Premier League,Matchweek 3,Home,D 1-1,Liverpool,Chelsea,Y,LW,90,0,0,0,0,3,0,0,0,68,13,3,2,2,0.5,0.5,0,4,1,27,42,64.3,3,45,11,1,5
+3,2021-09-01,Wed,WCQ,Second round,Home,W 2-0,sn Senegal,tg Togo,Y,AM,90,1,0,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2021-09-07,Tue,WCQ,Second round,Away,W 3-1,sn Senegal,cg Congo,Y,AM,90,1,0,1,1,,,1,0,,,,,,,,,,,,,,,,,,
+3,2021-09-12,Sun,Premier League,Matchweek 4,Away,W 3-0,Liverpool,Leeds United,Y,LW,90,1,0,0,0,10,2,0,0,54,8,0,0,2,2,2,0,6,0,26,31,83.9,4,42,8,1,3
+3,2021-09-15,Wed,Champions Lg,Group stage,Home,W 3-2,eng Liverpool,it Milan,N,FW,28,0,0,0,0,1,0,0,0,20,2,0,1,1,0,0,0,0,0,10,11,90.9,0,14,2,1,3
+3,2021-09-18,Sat,Premier League,Matchweek 5,Home,W 3-0,Liverpool,Crystal Palace,Y,"LW,FW",90,1,0,0,0,2,1,0,0,32,10,2,0,0,0.5,0.5,0.1,2,0,14,23,60.9,3,28,6,3,3
+3,2021-09-25,Sat,Premier League,Matchweek 6,Away,D 3-3,Liverpool,Brentford,Y,"LW,LM",90,0,0,0,0,1,0,0,0,48,6,1,0,1,0.1,0.1,0.5,3,0,29,39,74.4,4,40,10,1,2
+3,2021-09-28,Tue,Champions Lg,Group stage,Away,W 5-1,eng Liverpool,pt Porto,Y,LW,65,1,0,0,0,1,1,0,0,40,7,2,0,2,0.8,0.8,0.1,3,0,22,25,88,5,25,8,0,1
+3,2021-10-03,Sun,Premier League,Matchweek 7,Home,D 2-2,Liverpool,Manchester City,Y,LW,90,1,0,0,0,1,1,0,0,27,18,0,1,1,0.3,0.3,0,0,0,8,13,61.5,0,17,3,1,2
+3,2021-10-09,Sat,WCQ,Second round,Home,W 4-1,sn Senegal,na Namibia,Y,AM,90,1,2,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2021-10-12,Tue,WCQ,Second round,Away,W 3-1,sn Senegal,na Namibia,Y,AM,90,0,2,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2021-10-16,Sat,Premier League,Matchweek 8,Away,W 5-0,Liverpool,Watford,Y,LW,90,1,0,0,0,4,2,0,0,49,7,1,1,0,0.8,0.8,0,2,1,24,36,66.7,3,38,5,1,2
+3,2021-10-19,Tue,Champions Lg,Group stage,Away,W 3-2,eng Liverpool,es Atlético Madrid,Y,LW,62,0,0,0,0,1,1,0,0,22,5,1,0,2,0,0,0,1,0,12,14,85.7,1,13,3,0,0
+3,2021-10-24,Sun,Premier League,Matchweek 9,Away,W 5-0,Liverpool,Manchester Utd,N,FW,14,0,0,0,0,1,0,0,0,9,2,0,0,0,0.1,0.1,0,0,0,6,7,85.7,0,5,1,0,0
+3,2021-10-30,Sat,Premier League,Matchweek 10,Home,D 2-2,Liverpool,Brighton,Y,"LW,RW",90,1,0,0,0,2,1,0,0,53,17,1,1,3,0.3,0.3,0.1,2,0,26,37,70.3,3,38,2,3,5
+3,2021-11-03,Wed,Champions Lg,Group stage,Home,W 2-0,eng Liverpool,es Atlético Madrid,Y,LW,45,1,0,0,0,2,1,1,0,26,4,0,1,1,0.7,0.7,0,1,0,11,12,91.7,0,25,3,2,6
+3,2021-11-07,Sun,Premier League,Matchweek 11,Away,L 2-3,Liverpool,West Ham,Y,LW,90,0,0,0,0,4,1,0,0,56,6,0,0,3,0.7,0.7,0,3,0,33,45,73.3,3,42,13,1,1
+3,2021-11-11,Thu,WCQ,Second round,Away,D 1-1,sn Senegal,tg Togo,Y,AM,29,0,0,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2021-11-20,Sat,Premier League,Matchweek 12,Home,W 4-0,Liverpool,Arsenal,Y,LW,90,1,1,0,0,2,2,1,0,47,14,1,1,0,0.4,0.4,0.8,4,1,24,31,77.4,2,42,5,3,5
+3,2021-11-24,Wed,Champions Lg,Group stage,Home,W 2-0,eng Liverpool,pt Porto,Y,LW,71,0,0,0,0,3,0,0,0,27,12,1,0,2,0.2,0.2,0.1,1,0,11,15,73.3,1,21,2,1,2
+3,2021-11-27,Sat,Premier League,Matchweek 13,Home,W 4-0,Liverpool,Southampton,Y,LW,90,0,0,0,0,3,1,0,0,55,17,0,0,0,0.1,0.1,0,4,2,29,40,72.5,2,47,8,3,3
+3,2021-12-01,Wed,Premier League,Matchweek 14,Away,W 4-1,Liverpool,Everton,Y,LW,90,0,0,0,0,3,1,0,0,48,14,1,0,0,0.4,0.4,0.2,2,1,26,33,78.8,0,37,3,0,2
+3,2021-12-04,Sat,Premier League,Matchweek 15,Away,W 1-0,Liverpool,Wolves,Y,LW,90,0,0,0,0,1,1,0,0,46,20,1,0,1,0.3,0.3,0,3,0,26,37,70.3,7,39,7,3,3
+3,2021-12-07,Tue,Champions Lg,Group stage,Away,W 2-1,eng Liverpool,it Milan,Y,LW,63,0,1,0,0,1,1,0,0,34,10,1,0,1,0.1,0.1,0.1,4,1,18,24,75,3,28,5,1,2
+3,2021-12-11,Sat,Premier League,Matchweek 16,Home,W 1-0,Liverpool,Aston Villa,Y,LW,87,0,0,0,0,4,0,0,0,46,15,3,2,0,0.3,0.3,0.1,3,0,21,35,60,7,38,10,1,2
+3,2021-12-16,Thu,Premier League,Matchweek 17,Home,W 3-1,Liverpool,Newcastle Utd,Y,LW,90,0,0,0,0,2,1,0,0,48,13,2,2,2,0.5,0.5,0.3,3,1,24,30,80,4,36,1,1,2
+3,2021-12-19,Sun,Premier League,Matchweek 18,Away,D 2-2,Liverpool,Tottenham,Y,"LW,LM",81,0,0,0,0,2,0,0,0,53,15,4,0,1,0.1,0.1,0.1,4,0,27,34,79.4,2,44,8,2,2
+3,2021-12-28,Tue,Premier League,Matchweek 20,Away,L 0-1,Liverpool,Leicester City,Y,LW,90,0,0,0,0,5,1,0,0,55,13,1,2,2,0.7,0.7,0,2,0,27,37,73,6,38,9,0,0
+3,2022-01-02,Sun,Premier League,Matchweek 21,Away,D 2-2,Liverpool,Chelsea,Y,LW,89,1,0,0,0,2,2,1,0,40,30,1,1,1,0.7,0.7,0.2,3,1,20,25,80,1,33,2,2,5
+3,2022-01-10,Mon,Africa Cup of Nations,Group stage,Neutral,W 1-0,sn Senegal,zw Zimbabwe,Y,FW,90,1,0,1,1,4,2,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-01-14,Fri,Africa Cup of Nations,Group stage,Neutral,D 0-0,sn Senegal,gn Guinea,Y*,AM,90,0,0,0,0,1,0,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-01-18,Tue,Africa Cup of Nations,Group stage,Neutral,D 0-0,sn Senegal,mw Malawi,Y,FW,90,0,0,0,0,1,0,0,0,,,,1,,,,,,,,,,,,,,
+3,2022-01-25,Tue,Africa Cup of Nations,Round of 16,Neutral,W 2-0,sn Senegal,cv Cape Verde,Y,FW,69,1,0,0,0,3,2,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-01-30,Sun,Africa Cup of Nations,Quarter-finals,Neutral,W 3-1,sn Senegal,gq Equatorial Guinea,Y,FW,90,0,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-02-02,Wed,Africa Cup of Nations,Semi-finals,Neutral,W 3-1,sn Senegal,bf Burkina Faso,Y,FW,90,1,0,0,0,3,3,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-02-06,Sun,Africa Cup of Nations,Final,Neutral,D 0 (4)-0 (2),sn Senegal,eg Egypt,Y,FW,120,0,0,0,1,1,1,1,0,,,,1,,,,,,,,,,,,,,
+3,2022-02-13,Sun,Premier League,Matchweek 25,Away,W 1-0,Liverpool,Burnley,Y,LW,66,0,0,0,0,3,1,0,0,34,5,0,0,0,0.4,0.4,0.1,4,0,16,23,69.6,3,25,3,2,2
+3,2022-02-16,Wed,Champions Lg,Round of 16,Away,W 2-0,eng Liverpool,it Inter,Y,LW,58,0,0,0,0,2,0,0,0,31,17,1,1,2,0.1,0.1,0.2,2,0,12,15,80,3,22,1,0,1
+3,2022-02-19,Sat,Premier League,Matchweek 26,Home,W 3-1,Liverpool,Norwich City,Y,"FW,LM,LW",90,1,0,0,0,4,2,0,0,45,9,0,0,2,0.6,0.6,0.1,4,0,28,30,93.3,3,38,8,1,4
+3,2022-02-23,Wed,Premier League,Matchweek 19,Home,W 6-0,Liverpool,Leeds United,Y,FW,90,2,0,0,0,3,2,0,0,80,13,1,0,1,1.4,1.4,0.3,5,1,50,59,84.7,4,65,10,2,2
+3,2022-02-27,Sun,EFL Cup,Final,Away,D 0 (11)-0 (10),Liverpool,Chelsea,Y,FW,79,0,0,0,0,2,1,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-03-02,Wed,FA Cup,Fifth round proper,Home,W 2-1,Liverpool,Norwich City,N,,7,0,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-03-05,Sat,Premier League,Matchweek 28,Home,W 1-0,Liverpool,West Ham,Y,"FW,RW",90,1,0,0,0,5,1,1,0,69,12,1,1,0,1,1,0.2,3,0,42,53,79.2,7,65,16,2,3
+3,2022-03-08,Tue,Champions Lg,Round of 16,Home,L 0-1,eng Liverpool,it Inter,Y,"LW,FW",90,0,0,0,0,1,0,1,0,46,17,1,0,0,0,0,0.4,2,0,29,31,93.5,3,34,4,1,2
+3,2022-03-12,Sat,Premier League,Matchweek 29,Away,W 2-0,Liverpool,Brighton,Y,"FW,RW",90,0,0,0,0,4,3,0,0,42,27,1,0,0,0.3,0.3,0,2,0,23,24,95.8,6,30,2,4,4
+3,2022-03-16,Wed,Premier League,Matchweek 27,Away,W 2-0,Liverpool,Arsenal,Y,"LW,RW",90,0,0,0,0,1,0,0,0,31,20,0,0,4,0.3,0.3,0,0,0,11,13,84.6,1,24,2,1,2
+3,2022-03-25,Fri,WCQ,Third round,Away,L 0-1,sn Senegal,eg Egypt,Y,FW,90,0,0,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2022-03-29,Tue,WCQ,Third round,Home,W 1 (3)-0 (1),sn Senegal,eg Egypt,Y,AM,120,0,0,0,0,,,0,0,,,,,,,,,,,,,,,,,,
+3,2022-04-02,Sat,Premier League,Matchweek 31,Home,W 2-0,Liverpool,Watford,N,RW,22,0,0,0,0,1,0,0,0,11,6,0,0,1,0.1,0.1,0,0,0,5,8,62.5,0,3,1,0,1
+3,2022-04-05,Tue,Champions Lg,Quarter-finals,Away,W 3-1,eng Liverpool,pt Benfica,Y,FW,60,1,0,0,0,2,1,0,0,37,12,1,0,0,0.7,0.7,0.6,2,0,15,25,60,1,28,6,0,1
+3,2022-04-10,Sun,Premier League,Matchweek 32,Away,D 2-2,Liverpool,Manchester City,Y,"LW,FW",83,1,0,0,0,1,1,0,0,43,23,2,0,1,0.3,0.3,0,1,0,23,28,82.1,2,28,2,0,1
+3,2022-04-13,Wed,Champions Lg,Quarter-finals,Home,D 3-3,eng Liverpool,pt Benfica,N,LW,25,0,0,0,0,0,0,0,0,19,3,0,0,0,0,0,0.1,2,0,13,16,81.3,4,15,3,1,2
+3,2022-04-16,Sat,FA Cup,Semi-finals,Away,W 3-2,Liverpool,Manchester City,Y,FW,84,2,0,0,0,3,3,1,0,,,,0,,,,,,,,,,,,,,
+3,2022-04-19,Tue,Premier League,Matchweek 30,Home,W 4-0,Liverpool,Manchester Utd,Y,FW,90,1,1,0,0,2,1,0,0,66,9,0,0,1,0.2,0.2,0.3,4,2,49,55,89.1,5,49,5,1,1
+3,2022-04-24,Sun,Premier League,Matchweek 34,Home,W 2-0,Liverpool,Everton,Y,FW,59,0,0,0,0,2,0,1,0,39,2,0,1,1,0.1,0.1,0,1,0,24,32,75,0,30,3,1,2
+3,2022-04-27,Wed,Champions Lg,Semi-finals,Home,W 2-0,eng Liverpool,es Villarreal,Y,FW,71,1,0,0,0,4,1,0,0,35,14,3,1,0,1.1,1.1,0,3,0,16,23,69.6,1,24,1,0,0
+3,2022-04-30,Sat,Premier League,Matchweek 35,Away,W 1-0,Liverpool,Newcastle Utd,Y,LW,68,0,0,0,0,3,1,1,0,26,8,0,0,0,0.4,0.4,0.1,4,0,15,20,75,0,16,3,1,1
+3,2022-05-03,Tue,Champions Lg,Semi-finals,Away,W 3-2,eng Liverpool,es Villarreal,Y,"FW,LW",90,1,0,0,0,1,1,0,0,38,22,1,0,1,0.7,0.7,0.3,8,3,15,24,62.5,3,24,4,3,3
+3,2022-05-07,Sat,Premier League,Matchweek 36,Home,D 1-1,Liverpool,Tottenham,Y,FW,90,0,0,0,0,1,1,0,0,51,20,2,0,2,0,0,0.2,5,1,24,38,63.2,2,38,5,1,2
+3,2022-05-10,Tue,Premier League,Matchweek 33,Away,W 2-1,Liverpool,Aston Villa,Y,"FW,LW",90,1,0,0,0,4,1,0,0,46,16,0,0,1,0.6,0.6,0.1,4,0,25,35,71.4,5,34,7,2,3
+3,2022-05-14,Sat,FA Cup,Final,Away,D 0 (6)-0 (5),Liverpool,Chelsea,Y,FW,120,0,0,0,0,0,0,0,0,,,,0,,,,,,,,,,,,,,
+3,2022-05-22,Sun,Premier League,Matchweek 38,Home,W 3-1,Liverpool,Wolves,Y,FW,90,1,0,0,0,3,2,0,0,56,17,2,0,1,0.5,0.5,0.2,4,0,32,44,72.7,4,41,9,2,2
+3,2022-05-28,Sat,Champions Lg,Final,Neutral,L 0-1,eng Liverpool,es Real Madrid,Y,"FW,LW",90,0,0,0,0,3,1,0,0,57,16,2,2,0,0.2,0.2,0.2,8,0,35,43,81.4,5,54,10,2,6

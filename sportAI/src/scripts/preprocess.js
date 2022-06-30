@@ -31,7 +31,7 @@ export function convertCoordinates (data, projection) {
     }
   */
 
-  data.features.forEach((feature) =>{
+  data.features.forEach((feature) => {
     [feature.x, feature.y] = projection([feature.properties.LONGITUDE, feature.properties.LATITUDE])
   })
 }
@@ -49,7 +49,6 @@ export function simplifyDisplayTitles (data) {
     feature.properties.TYPE_SITE_INTERVENTION = TITLES[feature.properties.TYPE_SITE_INTERVENTION]
   })
 }
-
 
 export function summarizeLinesV3 (data) {
   // TODO : Generate the data structure as defined above
@@ -110,4 +109,102 @@ function countGoalV3(temps) {
   })
   let temp = [tempTkl, tempAst, tempGls, tempSucc, tempInt]
   return temp
+}
+
+
+export function summarizeLines (data) {
+  // TODO : Generate the data structure as defined above
+  // class by act, get all the acts
+  let getMonths = [...new Set(data.map((row) => parseInt(row.Date.substring(5,7))))].sort((a, b) => a - b)
+  console.log (getMonths)
+  // class by players, get all the players
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+  
+  console.log (getPlayers)
+  // return the structure
+  return getMonths.map((month) => ({
+    Months: month,
+    Attributs: [{ 
+        Attribut: 'SoT',
+        Players: getPlayers.map((player) => ({
+          Player : player,
+          Count: countGoal (data.filter((row) => parseInt(row.Date.substring(5,7)) === month &&  parseInt(row.ID) === player))[0]
+      }))},
+      {
+        Attribut: "Gls",
+        Players: getPlayers.map((player) => ({
+          Player : player,
+          Count: countGoal (data.filter((row) => parseInt(row.Date.substring(5,7)) === month &&  parseInt(row.ID) === player))[1]
+      }))}]
+
+      .filter((elt) => elt.Count !== 0)
+  }))
+}
+
+function countGoal(temps) {
+  console.log(temps)
+  let tempsot = 0;
+  let tempgls = 0
+  temps.forEach((row) =>{
+    //console.log(row.SoT)
+    tempsot += parseInt(row.SoT)
+    tempgls += parseInt(row.Gls)
+  })
+  console.log(tempsot)
+  console.log(tempgls)
+  let temp = [tempsot, tempgls]
+  return temp
+}
+
+
+export function summarizeLinesG1 (data) {
+  const allCategorys = ["Gls", "SoT", "GCA", "PKatt", "Ast"]
+  const allPlayers = {1:"Mbappe",2:"Benzema", 3:"Mane"}
+
+  let getPlayers = [...new Set(data.map((row) => parseInt(row.ID)))].sort((a, b) => a - b)
+  
+
+  return allCategorys.map((cat) => ({
+    Cat: cat,
+    Players: getPlayers
+      .map((player) => ({
+        Player: allPlayers[player],
+        Count: countCategory (data.filter((row) => parseInt(row.ID) === player), cat)
+      }))
+  }))
+}
+
+
+function countCategory(dataLines, cat) {
+  let countCat = 0;
+  switch (cat) {
+      case "Gls":
+        dataLines.forEach((row) =>{
+          countCat += (row.Gls ?parseInt(row.Gls):0);
+        })
+        break;
+      case "SoT":
+        dataLines.forEach((row) =>{
+          countCat += (row.SoT ? parseInt(row.SoT):0);  
+        })
+        break;
+      case "GCA":
+        dataLines.forEach((row) =>{
+          countCat += (row.GCA ? parseInt(row.GCA):0); 
+        })
+        break;
+      case "PKatt":
+        dataLines.forEach((row) =>{
+          countCat += (row.PKatt ? parseInt(row.PKatt):0); 
+        })
+        break;
+      case "Ast":
+        dataLines.forEach((row) =>{
+          countCat += (row.Ast ? parseInt(row.Ast):0); 
+        })
+        break;
+      default:
+          
+    }
+  return countCat;
 }

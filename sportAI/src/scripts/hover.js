@@ -37,9 +37,6 @@
    * @param {*} yScale The yScale to be used when placing the text in the square
    */
   export function rectSelectedV3 (element, xScale, yScale) {
-    // TODO : Display the number of trees on the selected element
-    // Make sure the nimber is centered. If there are 1000 or more
-    // trees, display the text in white so it contrasts with the background.
    
     d3.select(element)
       .append('text')
@@ -62,7 +59,6 @@
    * @param {*} element The selection of rectangles in "selected" state
    */
   export function rectUnselectedV3 (element) {
-    // TODO : Unselect the element
     d3.select(element)
       .attr('opacity', 1.0)
       .select('text').remove();
@@ -74,8 +70,7 @@
    * @param {string} name The name of the neighborhood associated with the tick text to make bold
    * @param {number} year The year associated with the tick text to make bold
    */
-  export function selectTicksV3 (name, year) { // player and aspect
-    // TODO : Make the ticks bold
+  export function selectTicksV3 (name, year) { 
     d3.selectAll('.tick')
       .filter((content) => (content == name || content == year))
       .attr('font-weight', 'bolder');
@@ -85,7 +80,6 @@
    * Returns the font weight of all ticks to normal.
    */
   export function unselectTicksV3 () {
-    // TODO : Unselect the ticks
     d3.selectAll('.tick').attr('font-weight', 'normal');
   }
   

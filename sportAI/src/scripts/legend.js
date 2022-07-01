@@ -1,30 +1,47 @@
+
 import d3Legend from 'd3-svg-legend'
 
+
+
 /**
- * Draws the color legend.
+ * Draws a legend in the area at the bottom of the screen, corresponding to the bars' colors
  *
- * @param {*} colorScale The color scale used for the legend
- * @param {*} g The d3 Selection of the SVG g elemnt containing the legend
+ * @param {string[]} data The data to be used to draw the legend elements
+ * @param {*} color The color scale used throughout the visualisation
  */
-export function drawLegend (colorScale, g) {
-  // TODO : Generate the legend
-  // For help, see : https://d3-legend.susielu.com/
+ export function draw (data, dataG, color2, color1) {
 
- /* g.append('text')
-    .text('Légende')
-    .attr('transform', 'translate(60, 115)')
-    .attr('font-family', 'Open Sans Condensed')
+  data.forEach(attribut => {
 
-  g.append('g')
-    .attr('transform', 'translate(60, 135)')
-    .attr('font-family', 'Open Sans Condensed')
-    .call(
-      d3Legend
-        .legendColor()
-        .shape('path', d3.symbol().type(d3.symbolCircle).size(300)())
-        .shapePadding(2)
-        .scale(colorScale)
-    )*/
+    // create a div to content player name and color box
+    let div = d3.select('#tab2').selectAll('div.legend').append('div').attr('class', 'legend-element')
+
+    // create SVG for rectangle
+    let SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px')
+
+    // adding rectangles to the SVG element
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color2(attribut))
+
+    // match text for a div
+    div.append('span').text(attribut).attr('Style', 'font-weight: bold')
+
+  });
+
+  dataG.forEach(attribut => {
+
+    // create a div to content player name and color box
+    let div = d3.select('#tab1').selectAll('div.legend').append('div').attr('class', 'legend-element')
+
+    // create SVG for rectangle
+    let SVG = div.append('svg').attr('width', 15).attr('height', 15).style('padding', '5px 9px 0px 0px')
+
+    // adding rectangles to the SVG element
+    SVG.append('rect').attr('width', '15').attr('height', '15').style('fill', color1(attribut))
+
+    // match text for a div
+    div.append('span').text(attribut).attr('Style', 'font-weight: bold')
+
+  });
 }
 
 /**
@@ -83,7 +100,6 @@ export function initLegendAxisV3 () {
  * @param {*} colorScale The color scale represented by the legend
  */
 export function drawV3 (x, y, height, width, fill, colorScale) {
-  // TODO : Draw the legend
     d3.select('.main-svg3 .legend.bar')
       .attr('width', width)
       .attr('height',height)

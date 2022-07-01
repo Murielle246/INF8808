@@ -8,53 +8,145 @@
 
         <link rel="stylesheet" href="assets/typography.css">
         <link rel="stylesheet" href="assets/style.css">
+        <link rel="stylesheet" href="assets/tooltip.css">
 
-      </head>
+    </head>
 
       <body>
         <main>
           <!-- Tab links -->
-          <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'tab1')" id = "defaultOpen" >vue d'ensemble des jeux</button>
-            <button class="tablinks" onclick="openCity(event, 'tab2')">evaluation des tirs</button>
-            <button class="tablinks" onclick="openCity(event, 'tab3')">  Aspects disciplinaire</button>
+
+          <div class = "tab">
+            <div class="head">
+              <button class="tablinks" onclick="openCity(event, 'tab1')" id = "defaultOpen" >Vue d'ensemble des joueurs</button>
+              <button class="tablinks" onclick="openCity(event, 'tab2')">Rendement Mensuel de buts</button>
+              <button class="tablinks" onclick="openCity(event, 'tab3')">Efficacité par catégories</button>
+            </div>
+            <div id = "appName">
+              <p>Pronostiques</p>
+            </div>
           </div>
+          
+
+          
+
 
           <!-- Tab content -->
           <div id="tab1" class="tabcontent">
-            <h3>Tab  1</h3>
-            <p>Tab 1 is the ........</p>
+            <h2>Vue d'ensemble des performances (technique, attaque, efficacité) des joueurs</h2>
+            <p>La premiere visualisation représente les performaces d'attaques des joueurs comparées cote a cote vis a vis des criteres pertinent pour dénoté une bonne offensive.</p>
+            <p>La deuxieme visualisation représente l'efficacité du joueur au cours de l'année vis a vis des criteres importants pour un joueur aspirant au titre de ballon d'or (Pourcentage de dribbles réussis, pourcentage de tirs cadrés etc).</p>
+            <p>La troisieme visualisation détaille une comparaison entre les aspects techniques de chaque joueur au cours de l'année.</p>
             <div class="viz-container">
-              <div class="graph" id="map11">
-                <svg class="main-svg1"></svg>
+              <div class="graph11" id="map11">
+                
+                <svg class="svg">
+                  <g transform = "rotate(90)"></g>
+                </svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div>
+                </div>
               </div>
-              <div class="graph" id="map12">
-                <svg class="main-svg2"></svg>
+
+             <div class="graph12" id="map12">
+                <svg class="svg"></svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div>
+                </div>
+              </div>
+
+              <div class="graph13" id="map13">
+                <svg class="svg"></svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div>
+                </div>
               </div>
             </div>
           </div>
 
           <div id="tab2" class="tabcontent">
-            <h3>Tab 2</h3>
-            <p>tab 2 is the .......</p>
+            <h2>Analyse des rendements mensuel de buts</h2>
+            <p>Cette visualisation représente les performance d’un joueur en  terme d’efficience  de but marqué  vis-à-vis du nombre de tirs cadrés qu’il a eu a tiré. </p>
+            <p>  Pour faciliter l’analyse nous avons regrouper les performances du joueur de façon mensuelle. </p>
+            <p> Indépendamment du nombre de matchs joué au cours d’un mois précis, nous avons juste fait une sommes de ses tirs cadrés durant une période d’un mois et ceci pour chaque mois de l’année, ainsi que les but marqués au cours de la même période pour tous les mois de l’année.  </p>
             <div class="viz-container">
-              <div class="graph" id="map2">
-                <svg class="main-svg"></svg>
+
+              <div class="graph21" id="map21">
+                <svg class="svg"></svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div>
+                </div>
+              </div>
+
+              <div class="graph22" id="map22">
+                <svg class="svg"></svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div> 
+                </div>
+              </div>
+
+              <div class="graph23" id="map23">
+                <svg class="svg"></svg>
+                <div class='panel'>
+                  <div class='legend-title'>
+                    <p>Legende</p>
+                  </div>
+                  <div class='legend'></div>
+                </div>
               </div>
             </div>
           </div>
 
           <div id="tab3" class="tabcontent">
-            <h3>Tab 3</h3>
-            <p>Tab 3 is the .......</p>
+            <h2>Performance des joueurs de soccer dans différents aspects</h2>
+            <p>Cette visualisation est une carte de chaleur interactive et elle est un excellent moyen de voir vers quels aspects les différents joueurs que nous comparons penchent le plus. </p>
+            <p> La visualisation compare le nombre de buts marqués, le pourcentage de dribble réussi, le nombre de passe décisives (assistances) le nombre d’interception et le nombre de tacles réussi. </p>
+            <p> Le code de couleurs nous permet de voir quel joueur performe le plus et dans quels aspects.</p>
             <div class="viz-container">
               <div class="graph3" id="map3" style="background-color:#ffffff;">
                 <svg class="main-svg3"></svg>
               </div>
+              <div class='panel'>
+                <div class='legend-title'>
+                  <p>Legende</p>
+                </div>
+                <div class='legend'>
+                  <div class = 'l'>
+                    <p>Tkl - Tackles </p>
+                    <p>Gls - Buts </p>
+                  </div>
+                  <div class = 'l'>
+                    <p>Succ - Dribbles Réussis </p>
+                    <p>Ast - Passes Decisives </p>
+                  </div>
+                  <div class = 'l'>
+                    <p>Int - Interceptions </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
+          <div class="footer">
+            <p>@Copyright Polytechnique Montréal/SportAI</p>
+          </div>
         </main>
+        
         <script src="https://d3js.org/d3.v5.js"></script>
         <script type="module" src="index.js"></script>
         <script>
@@ -72,6 +164,7 @@
             evt.currentTarget.className += " active";
           }
         </script>
+        
       </body>
 </html>
 
